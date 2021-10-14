@@ -6,20 +6,20 @@ import { Router, Route, Switch } from "react-router-dom";
 import "assets/scss/material-kit-react.scss?v=1.10.0";
 
 // pages for this product
-import Components from "views/Components/Components.js";
-import LandingPage from "views/LandingPage/LandingPage.js";
-import ProfilePage from "views/ProfilePage/ProfilePage.js";
 import LoginPage from "views/LoginPage/LoginPage.js";
+import SignupPage from "views/SignupPage/SignupPage";
+import ReactGA from "react-ga";
 
 var hist = createBrowserHistory();
+
+ReactGA.initialize("UA-134177845-1");
 
 ReactDOM.render(
   <Router history={hist}>
     <Switch>
-      <Route path="/landing-page" component={LandingPage} />
-      <Route path="/profile-page" component={ProfilePage} />
+      <Route path="/signup" component={SignupPage} />
       <Route path="/login-page" component={LoginPage} />
-      <Route path="/" component={Components} />
+      <Route path="/" component={LoginPage} />
     </Switch>
   </Router>,
   document.getElementById("root")

@@ -4,20 +4,15 @@ import React from "react";
 import PropTypes from "prop-types";
 // nodejs library that concatenates classes
 import classNames from "classnames";
-// material-ui core components
-import { List, ListItem } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { List, ListItem, withStyles } from "@material-ui/core";
 
 // @material-ui/icons
 import Favorite from "@material-ui/icons/Favorite";
 
-import styles from "assets/jss/material-kit-react/components/footerStyle.js";
+import footerStyle from "assets/jss/material-kit-react/components/footerStyle.js";
 
-const useStyles = makeStyles(styles);
-
-export default function Footer(props) {
-  const classes = useStyles();
-  const { whiteFont } = props;
+function Footer({ ...props }) {
+  const { classes, whiteFont } = props;
   const footerClasses = classNames({
     [classes.footer]: true,
     [classes.footerWhiteFont]: whiteFont,
@@ -29,11 +24,11 @@ export default function Footer(props) {
   return (
     <footer className={footerClasses}>
       <div className={classes.container}>
-        <div className={classes.left}>
+        {/* <div className={classes.left}>
           <List className={classes.list}>
             <ListItem className={classes.inlineBlock}>
               <a
-                href="https://www.creative-tim.com/?ref=mkr-footer"
+                href="https://www.creative-tim.com/"
                 className={classes.block}
                 target="_blank"
               >
@@ -42,7 +37,7 @@ export default function Footer(props) {
             </ListItem>
             <ListItem className={classes.inlineBlock}>
               <a
-                href="https://www.creative-tim.com/presentation?ref=mkr-footer"
+                href="https://www.creative-tim.com/presentation"
                 className={classes.block}
                 target="_blank"
               >
@@ -51,7 +46,7 @@ export default function Footer(props) {
             </ListItem>
             <ListItem className={classes.inlineBlock}>
               <a
-                href="http://blog.creative-tim.com/?ref=mkr-footer"
+                href="http://blog.creative-tim.com/"
                 className={classes.block}
                 target="_blank"
               >
@@ -60,7 +55,7 @@ export default function Footer(props) {
             </ListItem>
             <ListItem className={classes.inlineBlock}>
               <a
-                href="https://www.creative-tim.com/license?ref=mkr-footer"
+                href="https://www.creative-tim.com/license"
                 className={classes.block}
                 target="_blank"
               >
@@ -68,18 +63,14 @@ export default function Footer(props) {
               </a>
             </ListItem>
           </List>
-        </div>
+        </div> */}
         <div className={classes.right}>
-          &copy; {1900 + new Date().getYear()} , made with{" "}
-          <Favorite className={classes.icon} /> by{" "}
-          <a
-            href="https://www.creative-tim.com?ref=mkr-footer"
-            className={aClasses}
-            target="_blank"
-          >
-            Creative Tim
-          </a>{" "}
-          for a better web.
+          &copy; {1900 + new Date().getYear()} - made with{" "}
+          <Favorite className={classes.icon} /> av Night of Passion - Kontakta
+          oss på{" "}
+          <a href="mailto:fest@nightofpassion.se" className={aClasses}>
+            fest@nightofpassion.se
+          </a>
         </div>
       </div>
     </footer>
@@ -87,5 +78,8 @@ export default function Footer(props) {
 }
 
 Footer.propTypes = {
+  classes: PropTypes.object.isRequired,
   whiteFont: PropTypes.bool,
 };
+
+export default withStyles(footerStyle)(Footer);
