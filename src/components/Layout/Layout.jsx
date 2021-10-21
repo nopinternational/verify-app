@@ -5,10 +5,6 @@ import HeaderLinks from "components/Header/HeaderLinks.jsx";
 const dashboardRoutes = [];
 import PropTypes from "prop-types";
 
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
 const Layout = ({ children }) => {
   return (
     <>
@@ -29,3 +25,7 @@ const Layout = ({ children }) => {
   );
 };
 export default Layout;
+
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
+};

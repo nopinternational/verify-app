@@ -10,13 +10,6 @@ import GridItem from "components/Grid/GridItem.js";
 import Button from "components/CustomButtons/Button.js";
 import PropTypes from "prop-types";
 
-Article.propTypes = {
-  classes: PropTypes.node.isRequired,
-  title: PropTypes.node.isRequired,
-  children: PropTypes.node.isRequired,
-  cta: PropTypes.node.isRequired,
-};
-
 const Article = (props) => {
   const { classes, title, children, cta } = props;
 
@@ -40,3 +33,10 @@ const Article = (props) => {
 };
 
 export default withStyles(productStyle)(Article);
+
+Article.propTypes = {
+  classes: PropTypes.node.isRequired,
+  title: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired,
+  cta: PropTypes.node.isRequired,
+};

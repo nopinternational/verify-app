@@ -20,9 +20,6 @@ import landingPageStyle from "assets/jss/material-kit-react/views/landingPage.js
 import BecomeAMemberForm from "./Sections/BecomeAMemberForm.jsx";
 import PropTypes from "prop-types";
 
-SignupPage.propTypes = {
-  classes: PropTypes.node.isRequired,
-};
 const SignupPage = (props) => {
   const { classes } = props;
 
@@ -32,8 +29,8 @@ const SignupPage = (props) => {
         <div className={classes.container}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={6}>
-              <h1 className={classes.title}>Night of Passion</h1>
-              <h4>Socialt. Passion. Sex.</h4>
+              <h1 className={classes.title}>Night op</h1>
+              <h4>Socialt. Passion. S.</h4>
             </GridItem>
           </GridContainer>
         </div>
@@ -60,3 +57,7 @@ const SignupPage = (props) => {
 };
 
 export default withStyles(landingPageStyle)(SignupPage);
+
+SignupPage.propTypes = {
+  classes: PropTypes.node.isRequired,
+};
