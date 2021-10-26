@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react";
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
+import { makeStyles } from "@material-ui/core/styles";
 import productStyle from "assets/jss/material-kit-react/views/landingPageSections/productStyle.js";
 
 // core components
@@ -10,8 +10,10 @@ import GridItem from "components/Grid/GridItem.js";
 import Button from "components/CustomButtons/Button.js";
 import PropTypes from "prop-types";
 
+const useStyles = makeStyles(productStyle);
 const Article = (props) => {
-  const { classes, title, children, cta } = props;
+  const classes = useStyles();
+  const { title, children, cta } = props;
 
   const renderCTA = (ctaArray) => {
     return ctaArray ? (
@@ -32,11 +34,10 @@ const Article = (props) => {
   );
 };
 
-export default withStyles(productStyle)(Article);
+export default Article;
 
 Article.propTypes = {
-  classes: PropTypes.node.isRequired,
   title: PropTypes.node.isRequired,
   children: PropTypes.node.isRequired,
-  cta: PropTypes.node.isRequired,
+  cta: PropTypes.node,
 };

@@ -2,7 +2,7 @@ import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
+import { makeStyles } from "@material-ui/core/styles";
 
 // @material-ui/icons
 
@@ -18,14 +18,15 @@ import landingPageStyle from "assets/jss/material-kit-react/views/landingPage.js
 
 // Sections for this page
 import BecomeAMemberForm from "./Sections/BecomeAMemberForm.jsx";
-import PropTypes from "prop-types";
 
-const SignupPage = (props) => {
-  const { classes } = props;
+const useStyles = makeStyles(landingPageStyle);
+
+const SignupPage = () => {
+  const classes = useStyles();
 
   return (
     <Layout>
-      <Parallax filter image={require("assets/img/zero.jpg")}>
+      <Parallax filter image={require("assets/img/zero.jpg").default}>
         <div className={classes.container}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={6}>
@@ -56,8 +57,4 @@ const SignupPage = (props) => {
   );
 };
 
-export default withStyles(landingPageStyle)(SignupPage);
-
-SignupPage.propTypes = {
-  classes: PropTypes.node.isRequired,
-};
+export default SignupPage;
