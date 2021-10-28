@@ -1,4 +1,4 @@
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 
 export const isBrowser = () => typeof window !== "undefined";
 
@@ -8,7 +8,7 @@ export const getUser = () =>
     : {};
 
 export const userSignedIn = (firebase_auth) => {
-  onAuthStateChanged(firebase_auth, function (user) {
+  onAuthStateChanged(firebase_auth, (user) => {
     if (user) {
       // User is signed in
     } else {
@@ -25,15 +25,12 @@ export const isLoggedIn = () => {
   return !!user.email;
 };
 
-export const logout = (firebase) => {
+export const logout = (firebase_auth) => {
   setUser({});
   return new Promise((resolve) => {
-    firebase
-      .auth()
-      .signOut()
-      .then(function () {
-        resolve();
-      });
+    signOut(firebase_auth).then(function () {
+      resolve();
+    });
   });
 };
 

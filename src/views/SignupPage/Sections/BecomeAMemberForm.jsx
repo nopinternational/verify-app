@@ -21,8 +21,13 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 
 import productStyle from "assets/jss/material-kit-react/views/landingPageSections/productStyle.js";
 
-import { app as firebase, db } from "services/firebase.js";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { app as firebase } from "services/firebase.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
+import { getDatabase, ref, set } from "firebase/database";
 import { setUser, userSignedIn } from "components/Auth/auth";
 
 import ReactGA from "react-ga";
@@ -85,18 +90,22 @@ const BecomeAMemberForm = (props) => {
 
   function signupUser(signupData) {
     console.log(firebase);
-    const auth2 = getAuth();
-    createUserWithEmailAndPassword(auth2, signupData.email, signupData.password)
+    const firebase_auth = getAuth();
+    createUserWithEmailAndPassword(
+      firebase_auth,
+      signupData.email,
+      signupData.password
+    )
       .then((result) => {
         // signInSuccessUrl: '/app/profile',
-        userSignedIn(firebase);
+        userSignedIn(firebase_auth);
         setUser(result.user);
         writesignupDataToFirebase(result.user.uid, signupData);
         ReactGA.event({
           category: "Signup",
           action: "Signup Ok",
         });
-        sendVerificationEmail(firebase);
+        sendVerificationEmail();
         navigate("/app/validation");
       })
       .catch(function (error) {
@@ -125,11 +134,11 @@ const BecomeAMemberForm = (props) => {
       });
   }
 
-  const sendVerificationEmail = (firebase) => {
-    var user = firebase.auth().currentUser;
+  const sendVerificationEmail = () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
 
-    user
-      .sendEmailVerification()
+    sendEmailVerification(user)
       .then(function () {
         console.log(" // Email sent.");
       })
@@ -140,12 +149,12 @@ const BecomeAMemberForm = (props) => {
 
   const writesignupDataToFirebase = (userid, signupData) => {
     delete signupData["password"];
-    db.ref(`validation/${userid}/current`)
-      //.push(userid + "-hello")
-      .set({
-        ...signupData,
-        created: new Date().toISOString(),
-      });
+    const db = getDatabase();
+
+    set(ref(db, `validation/${userid}/current`), {
+      ...signupData,
+      created: new Date().toISOString(),
+    });
   };
 
   const handleSubmit = (event) => {
