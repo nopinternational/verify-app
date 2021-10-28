@@ -18,7 +18,7 @@ import Button from "components/CustomButtons/Button.js";
 
 import ReactGA from "react-ga";
 import headerLinksStyle from "assets/jss/material-kit-react/components/headerLinksStyle.js";
-import { firebase } from "services/firebase.js";
+import { app as firebase } from "services/firebase.js";
 import { logout, isLoggedIn } from "components/Auth/auth";
 
 const HeaderLinks = (props) => {

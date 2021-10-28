@@ -21,7 +21,8 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 
 import productStyle from "assets/jss/material-kit-react/views/landingPageSections/productStyle.js";
 
-import { firebase } from "services/firebase.js";
+import { app as firebase, db } from "services/firebase.js";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { setUser, userSignedIn } from "components/Auth/auth";
 
 import ReactGA from "react-ga";
@@ -83,9 +84,9 @@ const BecomeAMemberForm = (props) => {
   };
 
   function signupUser(signupData) {
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(signupData.email, signupData.password)
+    console.log(firebase);
+    const auth2 = getAuth();
+    createUserWithEmailAndPassword(auth2, signupData.email, signupData.password)
       .then((result) => {
         // signInSuccessUrl: '/app/profile',
         userSignedIn(firebase);
@@ -139,9 +140,7 @@ const BecomeAMemberForm = (props) => {
 
   const writesignupDataToFirebase = (userid, signupData) => {
     delete signupData["password"];
-    firebase
-      .database()
-      .ref(`validation/${userid}/current`)
+    db.ref(`validation/${userid}/current`)
       //.push(userid + "-hello")
       .set({
         ...signupData,

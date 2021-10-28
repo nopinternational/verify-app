@@ -1,3 +1,5 @@
+import { onAuthStateChanged } from "firebase/auth";
+
 export const isBrowser = () => typeof window !== "undefined";
 
 export const getUser = () =>
@@ -5,8 +7,8 @@ export const getUser = () =>
     ? JSON.parse(window.localStorage.getItem("user"))
     : {};
 
-export const userSignedIn = (firebase) => {
-  firebase.auth().onAuthStateChanged(function (user) {
+export const userSignedIn = (firebase_auth) => {
+  onAuthStateChanged(firebase_auth, function (user) {
     if (user) {
       // User is signed in
     } else {
