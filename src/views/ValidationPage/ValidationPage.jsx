@@ -2,30 +2,36 @@ import React, { useEffect, useState } from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
+import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 // @material-ui/icons
 
 // core components
-import Layout from "../../Layout/Layout.jsx";
-import Article from "../../Article/Article.jsx";
-import Button from "../../CustomButtons/Button.jsx";
-import GridContainer from "../../Grid/GridContainer.jsx";
-import GridItem from "../../Grid/GridItem.jsx";
-import Parallax from "../../Parallax/Parallax.jsx";
-import Quote from "../../Typography/Quote.jsx";
+import Layout from "components/Layout/Layout.jsx";
+import Article from "components/Article/Article.jsx";
+import Button from "components/CustomButtons/Button.js";
+import GridContainer from "components/Grid/GridContainer.js";
+import GridItem from "components/Grid/GridItem.js";
+import Parallax from "components/Parallax/Parallax.js";
+import Quote from "components/Typography/Quote.js";
 
-import landingPageStyle from "../../../assets/jss/material-kit-react/views/landingPage.jsx";
+import landingPageStyle from "assets/jss/material-kit-react/views/landingPage.js";
 
 // Sections for this page
 import ValidationForm from "./ValidationForm.jsx";
-import firebase from "gatsby-plugin-firebase";
-import { getUser } from "../../Auth/auth";
-import { setValidationRetry } from "../../Firebase/FirebaseService";
+//import firebase from "gatsby-plugin-firebase";
+//import { getUser } from "components/Auth/auth";
+import {
+  setValidationRetry,
+  persistValidationStatus,
+  onStatusValueChange,
+} from "services/validationService.js";
 
-const ValidationPage = (props) => {
-  const { classes } = props;
+const useStyles = makeStyles(landingPageStyle);
+
+const ValidationPage = () => {
+  const classes = useStyles();
 
   const [validationStatus, setValidationStatus] = useState({
     status: "none",
@@ -35,45 +41,51 @@ const ValidationPage = (props) => {
   const [contentLoaded, setContentLoaded] = useState(false);
 
   useEffect(() => {
-    const user = getUser();
+    // const user = getUser();
 
-    const uid = user.uid;
-    const validationDataRef = firebase
-      .database()
-      .ref(`/validation/${uid}/status/`);
+    // const uid = user.uid;
+    // const validationDataRef = firebase
+    //   .database()
+    //   .ref(`/validation/${uid}/status/`);
 
-    validationDataRef.on(
-      "value",
-      (snapshot) => {
-        const data = snapshot.val();
+    // validationDataRef.on(
+    //   "value",
+    //   (snapshot) => {
+    //     const data = snapshot.val();
 
-        setValidationStatus({ ...data });
-        setContentLoaded(true);
-      },
-      (cancelCallback) => {
-        //console.log("cancelCallback: ", cancelCallback)
-      }
-    );
+    //     setValidationStatus({ ...data });
+    //     setContentLoaded(true);
+    //   },
+    //   (cancelCallback) => {
+    //     //console.log("cancelCallback: ", cancelCallback)
+    //   }
+    // );
 
+    const statusDataRef = onStatusValueChange((data) => {
+      setValidationStatus({ ...data });
+      setContentLoaded(true);
+    });
     //componentWillUnmount
     return () => {
-      validationDataRef.off();
+      statusDataRef.off();
     };
   }, []);
 
   const revalidate = () => {
-    setValidationRetry(firebase);
+    setValidationRetry();
   };
-  const setStatus = (status) => {
-    const user = getUser();
 
-    const uid = user.uid;
-    const validationDataRef = firebase
-      .database()
-      .ref(`/validation/${uid}/status/`);
+  const setStatus = (status) => {
+    // const user = getUser();
+
+    // const uid = user.uid;
+    // const validationDataRef = firebase
+    //   .database()
+    //   .ref(`/validation/${uid}/status/`);
 
     const newState = { ...validationStatus, status };
-    validationDataRef.set(newState);
+    // validationDataRef.set(newState);
+    persistValidationStatus(newState);
     setValidationStatus(newState);
   };
 
@@ -231,4 +243,4 @@ const ValidationPage = (props) => {
   );
 };
 
-export default withStyles(landingPageStyle)(ValidationPage);
+export default ValidationPage;

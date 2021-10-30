@@ -1,19 +1,24 @@
-import React from "react"
+import React from "react";
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles"
+import { makeStyles } from "@material-ui/core/styles";
 
 // core components
-import Button from "../../CustomButtons/Button.jsx"
+import Button from "components/CustomButtons/Button.js";
 
-import { compose } from "recompose"
-import typographyStyle from "../../../assets/jss/material-kit-react/views/componentsSections/typographyStyle.jsx"
+import typographyStyle from "assets/jss/material-kit-react/views/componentsSections/typographyStyle.js";
 
-const ValidationImage = props => {
-  const { classes, src, onDelete } = props
+import PropTypes from "prop-types";
 
-  const onclick = event => {
-    onDelete(src)
-  }
+const useStyles = makeStyles(typographyStyle);
+
+const ValidationImage = (props) => {
+  const classes = useStyles();
+  const { src, onDelete } = props;
+
+  const onclick = (event) => {
+    event.value;
+    onDelete(src);
+  };
   return (
     <div>
       <img
@@ -25,6 +30,11 @@ const ValidationImage = props => {
         Ta bort
       </Button>
     </div>
-  )
-}
-export default compose(withStyles(typographyStyle))(ValidationImage)
+  );
+};
+
+ValidationImage.propTypes = {
+  src: PropTypes.string,
+  onDelete: PropTypes.func,
+};
+export default ValidationImage;

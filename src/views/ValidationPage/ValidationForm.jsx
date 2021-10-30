@@ -1,96 +1,98 @@
-import React, { createRef, useState } from "react"
-import { Link } from "gatsby"
+import React, { createRef, useState } from "react";
+import { Link } from "react";
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles"
-import InputAdornment from "@material-ui/core/InputAdornment"
-import Dialog from "@material-ui/core/Dialog"
-import DialogActions from "@material-ui/core/DialogActions"
-import DialogContent from "@material-ui/core/DialogContent"
-import DialogContentText from "@material-ui/core/DialogContentText"
-import DialogTitle from "@material-ui/core/DialogTitle"
+import { makeStyles } from "@material-ui/core/styles";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 // @material-ui/icons
-import Email from "@material-ui/icons/Email"
-import People from "@material-ui/icons/People"
-import Message from "@material-ui/icons/Message"
+import Email from "@material-ui/icons/Email";
+import People from "@material-ui/icons/People";
+import Message from "@material-ui/icons/Message";
 
-import AddAPhoto from "@material-ui/icons/AddAPhoto"
-import VerifiedUser from "@material-ui/icons/VerifiedUser"
+import AddAPhoto from "@material-ui/icons/AddAPhoto";
+import VerifiedUser from "@material-ui/icons/VerifiedUser";
 
 // core components
-import Button from "../../CustomButtons/Button.jsx"
-import CustomInput from "../../CustomInput/CustomInput.jsx"
-import InfoArea from "../../InfoArea/InfoArea.jsx"
-import GridContainer from "../../Grid/GridContainer.jsx"
-import GridItem from "../../Grid/GridItem.jsx"
+import Button from "components/CustomButtons/Button.js";
+import CustomInput from "components/CustomInput/CustomInput.js";
+import InfoArea from "components/InfoArea/InfoArea.js";
+import GridContainer from "components/Grid/GridContainer.js";
+import GridItem from "components/Grid/GridItem.js";
 
-import productStyle from "../../../assets/jss/material-kit-react/views/landingPageSections/productStyle.jsx"
+import productStyle from "assets/jss/material-kit-react/views/landingPageSections/productStyle.js";
 
-import firebase from "gatsby-plugin-firebase"
-import { getUser } from "../../Auth/auth"
-import { setValidationPending } from "../../Firebase/FirebaseService"
-import { compose } from "recompose"
+//import firebase from "gatsby-plugin-firebase";
+import { getUser } from "components/Auth/auth";
+import { setValidationPending } from "services/validationService.js";
 
-import { trackCustomEvent } from "gatsby-plugin-google-analytics"
+//import { trackCustomEvent } from "gatsby-plugin-google-analytics";
 
-import ValidationImage from "./ValidationImage.jsx"
+import ValidationImage from "./ValidationImage.jsx";
 
-const ValidationForm = props => {
-  const { classes, setValidationStatus } = props
+const useStyles = makeStyles(productStyle);
 
-  const fileInputRef = createRef()
+const ValidationForm = (props) => {
+  const classes = useStyles();
+  const { setValidationStatus } = props;
+
+  const fileInputRef = createRef();
   const [signupData, setSignupData] = useState({
     name: "",
     email: "",
     message: "",
-  })
+  });
 
-  const [isValidated, setValidated] = useState(false)
-  const [images, setImages] = useState([])
-  const [firebaseImages, setFirebaseImages] = useState([])
-  const [showDialog, setShowDialog] = useState(false)
+  const [isValidated, setValidated] = useState(false);
+  const [images, setImages] = useState([]);
+  const [firebaseImages, setFirebaseImages] = useState([]);
+  const [showDialog, setShowDialog] = useState(false);
 
   React.useEffect(() => {
-    const user = getUser()
+    const user = getUser();
 
-    const uid = user.uid
+    const uid = user.uid;
     const validationDataRef = firebase
       .database()
-      .ref(`/validation/${uid}/current/`)
+      .ref(`/validation/${uid}/current/`);
 
     validationDataRef.on(
       "value",
-      snapshot => {
-        const data = snapshot.val()
-        setSignupData({ ...data })
-        setValidated(data.validation)
-        setImages(data.images || [])
+      (snapshot) => {
+        const data = snapshot.val();
+        setSignupData({ ...data });
+        setValidated(data.validation);
+        setImages(data.images || []);
       },
-      cancelCallback => {
-        console.log("cancelCallback: ", cancelCallback)
+      (cancelCallback) => {
+        console.log("cancelCallback: ", cancelCallback);
       }
-    )
+    );
 
     //componentWillUnmount
     return () => {
-      validationDataRef.off()
-    }
-  }, [])
+      validationDataRef.off();
+    };
+  }, []);
 
-  const handleChange = event => {
-    const name = event.target.getAttribute("name")
-    setSignupData({ ...signupData, [name]: event.target.value })
-  }
+  const handleChange = (event) => {
+    const name = event.target.getAttribute("name");
+    setSignupData({ ...signupData, [name]: event.target.value });
+  };
 
   const handleCloseDialog = () => {
-    setShowDialog(false)
-  }
+    setShowDialog(false);
+  };
 
   const writesignupDataToFirebase = (userid, signupData) => {
-    delete signupData["password"]
-    const dataRef = firebase.database().ref(`validation/${userid}`)
+    delete signupData["password"];
+    const dataRef = firebase.database().ref(`validation/${userid}`);
 
-    const now = new Date().toISOString()
+    const now = new Date().toISOString();
     //.push(userid + "-hello")
     dataRef
       .push()
@@ -99,9 +101,9 @@ const ValidationForm = props => {
         created: now,
         firebaseImages,
       })
-      .catch(error => {
-        console.error(error)
-      })
+      .catch((error) => {
+        console.error(error);
+      });
 
     dataRef
       .child("current")
@@ -109,69 +111,69 @@ const ValidationForm = props => {
         message: signupData.message,
         created: now,
       })
-      .catch(error => {
-        console.error(error)
-      })
-  }
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
-  const uploadPhoto = event => {
-    fileInputRef.current.click()
-    event.stopPropagation()
-    event.preventDefault()
-  }
+  const uploadPhoto = (event) => {
+    fileInputRef.current.click();
+    event.stopPropagation();
+    event.preventDefault();
+  };
 
-  const fileSelectorChange = event => {
-    const file = event.target.files[0]
-    storeInMemory(file)
-    uploadToFirebase(file)
-  }
+  const fileSelectorChange = (event) => {
+    const file = event.target.files[0];
+    storeInMemory(file);
+    uploadToFirebase(file);
+  };
 
-  const storeInMemory = file => {
-    var reader = new FileReader()
-    reader.onload = function(event) {
-      const url = event.target.result
-      const newImages = images.concat(url)
-      setImages(newImages)
-    }
-    reader.readAsDataURL(file)
-  }
+  const storeInMemory = (file) => {
+    var reader = new FileReader();
+    reader.onload = function (event) {
+      const url = event.target.result;
+      const newImages = images.concat(url);
+      setImages(newImages);
+    };
+    reader.readAsDataURL(file);
+  };
 
-  const uploadToFirebase = file => {
+  const uploadToFirebase = (file) => {
     var metadata = {
       contentType: file.type,
-    }
+    };
 
-    var storage = firebase.storage()
-    const storageRef = storage.ref()
-    const uid = getUser().uid
+    var storage = firebase.storage();
+    const storageRef = storage.ref();
+    const uid = getUser().uid;
     storageRef
       .child(`validation/${uid}/` + file.name)
       .put(file, metadata)
-      .then(function(snapshot) {
+      .then(function (snapshot) {
         //image uploaded
 
-        setFirebaseImages(firebaseImages.concat(snapshot.ref.fullPath))
+        setFirebaseImages(firebaseImages.concat(snapshot.ref.fullPath));
       })
-      .catch(function(error) {
-        console.error("Upload failed:", error)
-      })
-  }
+      .catch(function (error) {
+        console.error("Upload failed:", error);
+      });
+  };
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     if (event) {
-      event.preventDefault()
+      event.preventDefault();
       trackCustomEvent({
         category: "Profile",
         action: "Validate Clicked",
-      })
-      setValidationPending(firebase)
-      writesignupDataToFirebase(getUser().uid, signupData)
+      });
+      setValidationPending(firebase);
+      writesignupDataToFirebase(getUser().uid, signupData);
       trackCustomEvent({
         category: "Signup",
         action: "Validate Ok",
-      })
+      });
     }
-  }
+  };
 
   const validatedView = () => {
     return (
@@ -188,26 +190,26 @@ const ValidationForm = props => {
           <Button color="primary">OK</Button>
         </Link>
       </div>
-    )
-  }
+    );
+  };
 
-  const handleOnDeleteImage = src => {
-    const newImages = images.filter(imageSrc => imageSrc !== src)
-    setImages(newImages)
+  const handleOnDeleteImage = (src) => {
+    const newImages = images.filter((imageSrc) => imageSrc !== src);
+    setImages(newImages);
 
-    var storage = firebase.storage()
-    const storageRef = storage.refFromURL(src)
+    var storage = firebase.storage();
+    const storageRef = storage.refFromURL(src);
     storageRef
       .delete()
-      .then(function(snapshot) {
+      .then(function (snapshot) {
         // file deleted
       })
-      .catch(function(error) {
-        console.error("delete failed:", error)
-      })
-  }
+      .catch(function (error) {
+        console.error("delete failed:", error);
+      });
+  };
   const imageView = () => {
-    if (!images || images.length === 0) return null
+    if (!images || images.length === 0) return null;
     return (
       <div>
         <GridContainer>
@@ -216,12 +218,12 @@ const ValidationForm = props => {
               <GridItem xs={12} sm={6} md={4} key={index}>
                 <ValidationImage src={image} onDelete={handleOnDeleteImage} />
               </GridItem>
-            )
+            );
           })}
         </GridContainer>
       </div>
-    )
-  }
+    );
+  };
   const formView = () => {
     return (
       <div>
@@ -328,10 +330,10 @@ const ValidationForm = props => {
           </DialogActions>
         </Dialog>
       </div>
-    )
-  }
+    );
+  };
 
-  return isValidated ? validatedView() : formView()
-}
+  return isValidated ? validatedView() : formView();
+};
 
-export default compose(withStyles(productStyle))(ValidationForm)
+export default ValidationForm;

@@ -1,27 +1,29 @@
-import React from "react"
+import React from "react";
 // nodejs library that concatenates classes
-import classNames from "classnames"
+import classNames from "classnames";
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles"
+import { makeStyles } from "@material-ui/core/styles";
 
 // @material-ui/icons
 
 // core components
-import Layout from "../../Layout/Layout.jsx"
-import Article from "../../Article/Article.jsx"
+import Layout from "components/Layout/Layout.jsx";
+import Article from "components/Article/Article.jsx";
 
-import GridContainer from "../../Grid/GridContainer.jsx"
-import GridItem from "../../Grid/GridItem.jsx"
-import Parallax from "../../Parallax/Parallax.jsx"
+import GridContainer from "components/Grid/GridContainer.jsx";
+import GridItem from "components/Grid/GridItem.jsx";
+import Parallax from "components/Parallax/Parallax.jsx";
 
-import landingPageStyle from "../../../assets/jss/material-kit-react/views/landingPage.jsx"
+import landingPageStyle from "assets/jss/material-kit-react/views/landingPage.jsx";
 
 // Sections for this page
-import ValidationForm from "./ValidationForm.jsx"
-import Logout from "./Logout.jsx"
+import ValidationForm from "./ValidationForm.jsx";
+import Logout from "./Logout.jsx";
 
-const ValidationPage = props => {
-  const { classes } = props
+const useStyles = makeStyles(landingPageStyle);
+
+const ValidationPage = () => {
+  const classes = useStyles();
 
   return (
     <Layout>
@@ -53,7 +55,7 @@ const ValidationPage = props => {
         </div>
       </div>
     </Layout>
-  )
-}
+  );
+};
 
-export default withStyles(landingPageStyle)(ValidationPage)
+export default ValidationPage;
