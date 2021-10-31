@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link, navigate } from "react";
+import { Link } from "react";
+import { useHistory } from "react-router-dom";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -34,6 +35,7 @@ import ReactGA from "react-ga";
 
 const BecomeAMemberForm = (props) => {
   const { classes } = props;
+  const history = useHistory();
 
   const [validateOnChange, setValidateOnChange] = useState(false);
   const [password2, setPassword2] = useState("");
@@ -106,7 +108,8 @@ const BecomeAMemberForm = (props) => {
           action: "Signup Ok",
         });
         sendVerificationEmail();
-        navigate("/app/validation");
+
+        history.push("/app/validation");
       })
       .catch(function (error) {
         // Handle Errors here.

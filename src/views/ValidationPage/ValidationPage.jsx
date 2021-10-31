@@ -21,7 +21,7 @@ import landingPageStyle from "assets/jss/material-kit-react/views/landingPage.js
 // Sections for this page
 import ValidationForm from "./ValidationForm.jsx";
 //import firebase from "gatsby-plugin-firebase";
-//import { getUser } from "components/Auth/auth";
+import { getUser } from "components/Auth/auth";
 import {
   setValidationRetry,
   persistValidationStatus,
@@ -41,9 +41,10 @@ const ValidationPage = () => {
   const [contentLoaded, setContentLoaded] = useState(false);
 
   useEffect(() => {
-    // const user = getUser();
+    const user = getUser();
 
-    // const uid = user.uid;
+    const uid = user.uid;
+    console.log(`validationPage uid: ${uid}`);
     // const validationDataRef = firebase
     //   .database()
     //   .ref(`/validation/${uid}/status/`);
@@ -61,14 +62,19 @@ const ValidationPage = () => {
     //   }
     // );
 
-    const statusDataRef = onStatusValueChange((data) => {
-      setValidationStatus({ ...data });
+    onStatusValueChange((data) => {
+      console.log(data);
       setContentLoaded(true);
     });
-    //componentWillUnmount
-    return () => {
-      statusDataRef.off();
-    };
+
+    // const statusDataRef = onStatusValueChange((data) => {
+    //   setValidationStatus({ ...data });
+    //   setContentLoaded(true);
+    // });
+    // //componentWillUnmount
+    // return () => {
+    //   statusDataRef.off();
+    // };
   }, []);
 
   const revalidate = () => {

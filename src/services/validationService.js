@@ -15,6 +15,51 @@ export const persistValidationStatus = (status, message) => {
     //return validationDataRef.child("status").set(status);
   }
 };
+
+export const persistSignupData = (userid, signupData, firebaseImages) => {
+  const db = getDatabase();
+  const validationDataRef = ref(db, `validation/${userid}`);
+  //const dataRef = firebase.database().ref(`validation/${userid}`);
+  const now = new Date().toISOString();
+  //.push(userid + "-hello")
+
+  set(validationDataRef, {
+    message: signupData.message,
+    created: now,
+    firebaseImages,
+  }).catch((error) => {
+    console.error(error);
+  });
+
+  // dataRef
+  //   .push()
+  //   .set({
+  //     message: signupData.message,
+  //     created: now,
+  //     firebaseImages,
+  //   })
+  //   .catch((error) => {
+  //     console.error(error);
+  //   });
+
+  set(child(validationDataRef, "current"), {
+    message: signupData.message,
+    created: now,
+    firebaseImages,
+  }).catch((error) => {
+    console.error(error);
+  });
+  // dataRef
+  //   .child("current")
+  //   .update({
+  //     message: signupData.message,
+  //     created: now,
+  //   })
+  //   .catch((error) => {
+  //     console.error(error);
+  //   });
+};
+
 export const onStatusValueChange = (callback) => {
   const user = getUser();
 

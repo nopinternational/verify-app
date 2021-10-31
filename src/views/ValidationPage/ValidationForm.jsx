@@ -28,17 +28,20 @@ import productStyle from "assets/jss/material-kit-react/views/landingPageSection
 
 //import firebase from "gatsby-plugin-firebase";
 import { getUser } from "components/Auth/auth";
-import { setValidationPending } from "services/validationService.js";
+import {
+  setValidationPending,
+  persistSignupData,
+} from "services/validationService.js";
 
 //import { trackCustomEvent } from "gatsby-plugin-google-analytics";
-
+import ReactGA from "react-ga";
 import ValidationImage from "./ValidationImage.jsx";
 
 const useStyles = makeStyles(productStyle);
 
-const ValidationForm = (props) => {
+const ValidationForm = () => {
   const classes = useStyles();
-  const { setValidationStatus } = props;
+  //const { setValidationStatus } = props;
 
   const fileInputRef = createRef();
   const [signupData, setSignupData] = useState({
@@ -56,27 +59,31 @@ const ValidationForm = (props) => {
     const user = getUser();
 
     const uid = user.uid;
-    const validationDataRef = firebase
-      .database()
-      .ref(`/validation/${uid}/current/`);
+    console.log(`validationForm uid: ${uid}`);
 
-    validationDataRef.on(
-      "value",
-      (snapshot) => {
-        const data = snapshot.val();
-        setSignupData({ ...data });
-        setValidated(data.validation);
-        setImages(data.images || []);
-      },
-      (cancelCallback) => {
-        console.log("cancelCallback: ", cancelCallback);
-      }
-    );
+    //not correct!!!
+    setValidated(false);
+    // const validationDataRef = firebase
+    //   .database()
+    //   .ref(`/validation/${uid}/current/`);
+
+    // validationDataRef.on(
+    //   "value",
+    //   (snapshot) => {
+    //     const data = snapshot.val();
+    //     setSignupData({ ...data });
+    //     setValidated(data.validation);
+    //     setImages(data.images || []);
+    //   },
+    //   (cancelCallback) => {
+    //     console.log("cancelCallback: ", cancelCallback);
+    //   }
+    // );
 
     //componentWillUnmount
-    return () => {
-      validationDataRef.off();
-    };
+    // return () => {
+    //   validationDataRef.off();
+    // };
   }, []);
 
   const handleChange = (event) => {
@@ -90,30 +97,8 @@ const ValidationForm = (props) => {
 
   const writesignupDataToFirebase = (userid, signupData) => {
     delete signupData["password"];
-    const dataRef = firebase.database().ref(`validation/${userid}`);
 
-    const now = new Date().toISOString();
-    //.push(userid + "-hello")
-    dataRef
-      .push()
-      .set({
-        message: signupData.message,
-        created: now,
-        firebaseImages,
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-
-    dataRef
-      .child("current")
-      .update({
-        message: signupData.message,
-        created: now,
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    persistSignupData(userid, signupData, firebaseImages);
   };
 
   const uploadPhoto = (event) => {
@@ -142,33 +127,35 @@ const ValidationForm = (props) => {
     var metadata = {
       contentType: file.type,
     };
+    console.log(`uploadToFirebase, metadata= ${metadata}`);
+    //dummy
+    setFirebaseImages("foobar");
+    // var storage = firebase.storage();
+    // const storageRef = storage.ref();
+    // const uid = getUser().uid;
+    // storageRef
+    //   .child(`validation/${uid}/` + file.name)
+    //   .put(file, metadata)
+    //   .then(function (snapshot) {
+    //     //image uploaded
 
-    var storage = firebase.storage();
-    const storageRef = storage.ref();
-    const uid = getUser().uid;
-    storageRef
-      .child(`validation/${uid}/` + file.name)
-      .put(file, metadata)
-      .then(function (snapshot) {
-        //image uploaded
-
-        setFirebaseImages(firebaseImages.concat(snapshot.ref.fullPath));
-      })
-      .catch(function (error) {
-        console.error("Upload failed:", error);
-      });
+    //     setFirebaseImages(firebaseImages.concat(snapshot.ref.fullPath));
+    //   })
+    //   .catch(function (error) {
+    //     console.error("Upload failed:", error);
+    //   });
   };
 
   const handleSubmit = (event) => {
     if (event) {
       event.preventDefault();
-      trackCustomEvent({
+      ReactGA.event({
         category: "Profile",
         action: "Validate Clicked",
       });
-      setValidationPending(firebase);
+      setValidationPending();
       writesignupDataToFirebase(getUser().uid, signupData);
-      trackCustomEvent({
+      ReactGA.event({
         category: "Signup",
         action: "Validate Ok",
       });
@@ -197,17 +184,18 @@ const ValidationForm = (props) => {
     const newImages = images.filter((imageSrc) => imageSrc !== src);
     setImages(newImages);
 
-    var storage = firebase.storage();
-    const storageRef = storage.refFromURL(src);
-    storageRef
-      .delete()
-      .then(function (snapshot) {
-        // file deleted
-      })
-      .catch(function (error) {
-        console.error("delete failed:", error);
-      });
+    // var storage = firebase.storage();
+    // const storageRef = storage.refFromURL(src);
+    // storageRef
+    //   .delete()
+    //   .then(function (snapshot) {
+    //     // file deleted
+    //   })
+    //   .catch(function (error) {
+    //     console.error("delete failed:", error);
+    //   });
   };
+
   const imageView = () => {
     if (!images || images.length === 0) return null;
     return (
