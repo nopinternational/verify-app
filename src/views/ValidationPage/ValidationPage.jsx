@@ -63,7 +63,7 @@ const ValidationPage = () => {
     //   }
     // );
 
-    const statusDataRef = onStatusValueChange((data) => {
+    const offStatusValueChange = onStatusValueChange((data) => {
       console.log(data);
       setValidationStatus({ ...data });
       setContentLoaded(true);
@@ -75,7 +75,7 @@ const ValidationPage = () => {
     // });
     // //componentWillUnmount
     return () => {
-      statusDataRef.off();
+      offStatusValueChange();
     };
   }, []);
 
@@ -85,15 +85,7 @@ const ValidationPage = () => {
   };
 
   const setStatus = (status) => {
-    // const user = getUser();
-
-    // const uid = user.uid;
-    // const validationDataRef = firebase
-    //   .database()
-    //   .ref(`/validation/${uid}/status/`);
-
     const newState = { ...validationStatus, status };
-    // validationDataRef.set(newState);
     persistValidationStatus(newState);
     setValidationStatus(newState);
   };

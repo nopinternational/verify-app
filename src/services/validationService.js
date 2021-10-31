@@ -1,5 +1,13 @@
 import { getUser } from "../components/Auth/auth";
-import { getDatabase, ref, set, child, onValue } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  set,
+  push,
+  child,
+  onValue,
+  off,
+} from "firebase/database";
 
 export const persistValidationStatus = (status, message) => {
   console.log("persistValidationStatus", status, message);
@@ -25,24 +33,13 @@ export const persistSignupData = (userid, signupData, firebaseImages) => {
   const now = new Date().toISOString();
   //.push(userid + "-hello")
 
-  set(validationDataRef, {
+  push(validationDataRef, {
     message: signupData.message,
     created: now,
     firebaseImages,
   }).catch((error) => {
     console.error(error);
   });
-
-  // dataRef
-  //   .push()
-  //   .set({
-  //     message: signupData.message,
-  //     created: now,
-  //     firebaseImages,
-  //   })
-  //   .catch((error) => {
-  //     console.error(error);
-  //   });
 
   set(child(validationDataRef, "current"), {
     message: signupData.message,
@@ -51,22 +48,9 @@ export const persistSignupData = (userid, signupData, firebaseImages) => {
   }).catch((error) => {
     console.error(error);
   });
-  // dataRef
-  //   .child("current")
-  //   .update({
-  //     message: signupData.message,
-  //     created: now,
-  //   })
-  //   .catch((error) => {
-  //     console.error(error);
-  //   });
 };
 
-export const onValidationDataChange = (
-  setSignupData,
-  setValidated,
-  setImages
-) => {
+export const onValidationDataChange = (callback) => {
   const user = getUser();
 
   const uid = user.uid;
@@ -75,12 +59,12 @@ export const onValidationDataChange = (
   onValue(currentRef, (snapshot) => {
     const data = snapshot.val();
     console.log("validation data change: ", data);
-    setSignupData({ ...data });
-    setValidated(data.validation);
-    setImages(data.images || []);
+    callback(data);
   });
 
-  return currentRef;
+  return () => {
+    off(currentRef);
+  };
 };
 
 export const onStatusValueChange = (callback) => {
@@ -95,12 +79,9 @@ export const onStatusValueChange = (callback) => {
 
     callback(data);
   });
-  return statusDataRef;
-
-  // onValue(starCountRef, (snapshot) => {
-  //   const data = snapshot.val();
-  //   updateStarCount(postElement, data);
-  // });
+  return () => {
+    off(statusDataRef);
+  };
 };
 
 export const setValidationPending = () => {

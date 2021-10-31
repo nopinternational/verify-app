@@ -62,15 +62,15 @@ const ValidationForm = () => {
     const uid = user.uid;
     console.log(`validationForm uid: ${uid}`);
 
-    const validationDataRef = onValidationDataChange(
-      setSignupData,
-      setValidated,
-      setImages
-    );
+    const offValidationDataChange = onValidationDataChange((data) => {
+      setSignupData({ ...data });
+      setValidated(data.validation);
+      setImages(data.images || []);
+    });
 
     //componentWillUnmount
     return () => {
-      validationDataRef.off();
+      offValidationDataChange();
     };
   }, []);
 
@@ -135,6 +135,7 @@ const ValidationForm = () => {
   };
 
   const handleSubmit = (event) => {
+    console.log("handleSubmit");
     if (event) {
       event.preventDefault();
       ReactGA.event({
