@@ -31,6 +31,7 @@ import { getUser } from "components/Auth/auth";
 import {
   setValidationPending,
   persistSignupData,
+  onValidationDataChange,
 } from "services/validationService.js";
 
 //import { trackCustomEvent } from "gatsby-plugin-google-analytics";
@@ -61,29 +62,16 @@ const ValidationForm = () => {
     const uid = user.uid;
     console.log(`validationForm uid: ${uid}`);
 
-    //not correct!!!
-    setValidated(false);
-    // const validationDataRef = firebase
-    //   .database()
-    //   .ref(`/validation/${uid}/current/`);
-
-    // validationDataRef.on(
-    //   "value",
-    //   (snapshot) => {
-    //     const data = snapshot.val();
-    //     setSignupData({ ...data });
-    //     setValidated(data.validation);
-    //     setImages(data.images || []);
-    //   },
-    //   (cancelCallback) => {
-    //     console.log("cancelCallback: ", cancelCallback);
-    //   }
-    // );
+    const validationDataRef = onValidationDataChange(
+      setSignupData,
+      setValidated,
+      setImages
+    );
 
     //componentWillUnmount
-    // return () => {
-    //   validationDataRef.off();
-    // };
+    return () => {
+      validationDataRef.off();
+    };
   }, []);
 
   const handleChange = (event) => {

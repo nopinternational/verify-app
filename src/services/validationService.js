@@ -60,6 +60,25 @@ export const persistSignupData = (userid, signupData, firebaseImages) => {
   //   });
 };
 
+export const onValidationDataChange = (
+  setSignupData,
+  setValidated,
+  setImages
+) => {
+  const user = getUser();
+
+  const uid = user.uid;
+  const db = getDatabase();
+  const currentRef = ref(db, `/validation/${uid}/current/`);
+  onValue(currentRef, (snapshot) => {
+    const data = snapshot.val();
+    console.log("validation data change: ", data);
+    setSignupData({ ...data });
+    setValidated(data.validation);
+    setImages(data.images || []);
+  });
+};
+
 export const onStatusValueChange = (callback) => {
   const user = getUser();
 
