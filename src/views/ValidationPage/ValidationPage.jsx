@@ -45,6 +45,7 @@ const ValidationPage = () => {
 
     const uid = user.uid;
     console.log(`validationPage uid: ${uid}`);
+
     // const validationDataRef = firebase
     //   .database()
     //   .ref(`/validation/${uid}/status/`);
@@ -62,8 +63,9 @@ const ValidationPage = () => {
     //   }
     // );
 
-    onStatusValueChange((data) => {
+    const statusDataRef = onStatusValueChange((data) => {
       console.log(data);
+      setValidationStatus({ ...data });
       setContentLoaded(true);
     });
 
@@ -72,12 +74,13 @@ const ValidationPage = () => {
     //   setContentLoaded(true);
     // });
     // //componentWillUnmount
-    // return () => {
-    //   statusDataRef.off();
-    // };
+    return () => {
+      statusDataRef.off();
+    };
   }, []);
 
   const revalidate = () => {
+    console.log("helleo");
     setValidationRetry();
   };
 
@@ -139,7 +142,7 @@ const ValidationPage = () => {
       return (
         <>
           <p className={classes.description}>
-            Från er tidigare försök så fick ni meddelandet:
+            Från ert tidigare försök så fick ni meddelandet:
           </p>
           <Quote text={validationStatus.message || "(okänd anledning)"} />
         </>

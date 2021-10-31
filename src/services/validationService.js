@@ -2,6 +2,7 @@ import { getUser } from "../components/Auth/auth";
 import { getDatabase, ref, set, child, onValue } from "firebase/database";
 
 export const persistValidationStatus = (status, message) => {
+  console.log("persistValidationStatus", status, message);
   const user = getUser();
 
   const uid = user.uid;
@@ -9,9 +10,10 @@ export const persistValidationStatus = (status, message) => {
   const validationDataRef = ref(db, `/validation/${uid}/status/`);
 
   if (message) {
-    return set(db, validationDataRef, { status, message });
+    return set(validationDataRef, { status, message });
   } else {
-    return set(db, child(validationDataRef, "status"), { status, message });
+    const status_child_status_ref = child(validationDataRef, "status");
+    return set(status_child_status_ref, status);
     //return validationDataRef.child("status").set(status);
   }
 };
@@ -77,6 +79,8 @@ export const onValidationDataChange = (
     setValidated(data.validation);
     setImages(data.images || []);
   });
+
+  return currentRef;
 };
 
 export const onStatusValueChange = (callback) => {
@@ -90,8 +94,8 @@ export const onStatusValueChange = (callback) => {
     const data = snapshot.val();
 
     callback(data);
-    return statusDataRef;
   });
+  return statusDataRef;
 
   // onValue(starCountRef, (snapshot) => {
   //   const data = snapshot.val();
