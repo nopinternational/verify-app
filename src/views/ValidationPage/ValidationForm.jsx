@@ -32,6 +32,7 @@ import {
   setValidationPending,
   persistSignupData,
   onValidationDataChange,
+  persistImage,
 } from "services/validationService.js";
 
 //import { trackCustomEvent } from "gatsby-plugin-google-analytics";
@@ -118,6 +119,9 @@ const ValidationForm = () => {
     console.log(`uploadToFirebase, metadata= ${metadata}`);
     //dummy
     setFirebaseImages("foobar");
+    persistImage(file, (snapshot) => {
+      console.log("after persistImage: ", snapshot);
+    });
     // var storage = firebase.storage();
     // const storageRef = storage.ref();
     // const uid = getUser().uid;

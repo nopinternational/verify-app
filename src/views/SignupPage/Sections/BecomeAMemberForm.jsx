@@ -154,6 +154,7 @@ const BecomeAMemberForm = (props) => {
     delete signupData["password"];
     const db = getDatabase();
 
+    console.log("writesignupDataToFirebase", signupData);
     set(ref(db, `validation/${userid}/current`), {
       ...signupData,
       created: new Date().toISOString(),

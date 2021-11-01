@@ -7,7 +7,9 @@ import {
   child,
   onValue,
   off,
+  update,
 } from "firebase/database";
+import { getStorage, uploadBytes, ref as storageRef } from "firebase/storage";
 
 export const persistValidationStatus = (status, message) => {
   console.log("persistValidationStatus", status, message);
@@ -27,6 +29,7 @@ export const persistValidationStatus = (status, message) => {
 };
 
 export const persistSignupData = (userid, signupData, firebaseImages) => {
+  console.log("persistSignupData", userid, signupData, firebaseImages);
   const db = getDatabase();
   const validationDataRef = ref(db, `validation/${userid}`);
   //const dataRef = firebase.database().ref(`validation/${userid}`);
@@ -41,7 +44,7 @@ export const persistSignupData = (userid, signupData, firebaseImages) => {
     console.error(error);
   });
 
-  set(child(validationDataRef, "current"), {
+  update(child(validationDataRef, "current"), {
     message: signupData.message,
     created: now,
     firebaseImages,
@@ -89,4 +92,19 @@ export const setValidationPending = () => {
 };
 export const setValidationRetry = () => {
   persistValidationStatus("RETRY");
+};
+
+export const persistImage = (file, success) => {
+  console.log("persistImage", file);
+  const user = getUser();
+
+  const uid = user.uid;
+  const storage = getStorage();
+  const baseRef = storageRef(storage, `validation/${uid}`);
+  const fileRef = storageRef(baseRef, file.name);
+  console.log("fileref=", fileRef);
+  uploadBytes(fileRef, file).then((snapshot) => {
+    console.log("Uploaded a blob or file!", snapshot);
+    success(snapshot);
+  });
 };
