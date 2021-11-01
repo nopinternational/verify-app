@@ -58,11 +58,6 @@ const ValidationForm = () => {
   const [showDialog, setShowDialog] = useState(false);
 
   React.useEffect(() => {
-    const user = getUser();
-
-    const uid = user.uid;
-    console.log(`validationForm uid: ${uid}`);
-
     const offValidationDataChange = onValidationDataChange((data) => {
       setSignupData({ ...data });
       setValidated(data.validation);
@@ -91,7 +86,6 @@ const ValidationForm = () => {
   };
 
   const uploadPhoto = (event) => {
-    console.log("uploadPhoto, firebaseImages: ", firebaseImages);
     fileInputRef.current.click();
     event.stopPropagation();
     event.preventDefault();
@@ -101,8 +95,6 @@ const ValidationForm = () => {
     const file = event.target.files[0];
     storeInMemory(file);
     uploadToFirebase(file);
-    console.log("after uploadToFirebase, firebaseImages: ", firebaseImages);
-    console.log("after uploadToFirebase, firebaseImages: ", firebaseImages);
   };
 
   const storeInMemory = (file) => {
@@ -116,38 +108,13 @@ const ValidationForm = () => {
   };
 
   const uploadToFirebase = (file) => {
-    var metadata = {
-      contentType: file.type,
-    };
-    console.log(`uploadToFirebase, metadata= ${metadata}`);
-
     persistImage(file, (metadata) => {
-      console.log("111 - firebaseImages:", firebaseImages);
-      console.log("after persistImage: ", metadata);
-      console.log("after persistImage.fullPath: ", metadata.fullPath);
       firebaseImages.push(metadata.fullPath);
-      console.log("222- firebaseImages:", firebaseImages);
       setFirebaseImages(firebaseImages);
-      console.log("333- firebaseImages:", firebaseImages);
     });
-    // var storage = firebase.storage();
-    // const storageRef = storage.ref();
-    // const uid = getUser().uid;
-    // storageRef
-    //   .child(`validation/${uid}/` + file.name)
-    //   .put(file, metadata)
-    //   .then(function (snapshot) {
-    //     //image uploaded
-
-    //     setFirebaseImages(firebaseImages.concat(snapshot.ref.fullPath));
-    //   })
-    //   .catch(function (error) {
-    //     console.error("Upload failed:", error);
-    //   });
   };
 
   const handleSubmit = (event) => {
-    console.log("handleSubmit");
     if (event) {
       event.preventDefault();
       ReactGA.event({

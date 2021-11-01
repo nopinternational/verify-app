@@ -17,7 +17,6 @@ import {
 } from "firebase/storage";
 
 export const persistValidationStatus = (status, message) => {
-  console.log("persistValidationStatus", status, message);
   const user = getUser();
 
   const uid = user.uid;
@@ -34,7 +33,6 @@ export const persistValidationStatus = (status, message) => {
 };
 
 export const persistSignupData = (userid, signupData, firebaseImages) => {
-  console.log("persistSignupData", userid, signupData, firebaseImages);
   const db = getDatabase();
   const validationDataRef = ref(db, `validation/${userid}`);
   //const dataRef = firebase.database().ref(`validation/${userid}`);
@@ -66,7 +64,6 @@ export const onValidationDataChange = (callback) => {
   const currentRef = ref(db, `/validation/${uid}/current/`);
   onValue(currentRef, (snapshot) => {
     const data = snapshot.val();
-    console.log("validation data change: ", data);
     callback(data);
   });
 
@@ -117,11 +114,11 @@ export const deleteImage = (url, success, error) => {
   const imageRef = storageRef(storage, url);
   deleteObject(imageRef)
     .then((snapshot) => {
-      console.log(`file ${url}deleted, snapshot:`, snapshot);
+      // console.log(`file ${url}deleted, snapshot:`, snapshot);
       if (success) success(snapshot);
     })
     .catch((err) => {
-      console.log("delete ended up in an error", err);
+      // console.log("delete ended up in an error", err);
       if (error) error(err);
     });
 

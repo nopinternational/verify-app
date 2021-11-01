@@ -22,7 +22,6 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 
 import productStyle from "assets/jss/material-kit-react/views/landingPageSections/productStyle.js";
 
-import { app as firebase } from "services/firebase.js";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -91,7 +90,6 @@ const BecomeAMemberForm = (props) => {
   };
 
   function signupUser(signupData) {
-    console.log(firebase);
     const firebase_auth = getAuth();
     createUserWithEmailAndPassword(
       firebase_auth,
@@ -142,9 +140,7 @@ const BecomeAMemberForm = (props) => {
     const user = auth.currentUser;
 
     sendEmailVerification(user)
-      .then(function () {
-        console.log(" // Email sent.");
-      })
+      .then(function () {})
       .catch(function (error) {
         console.error("// An error happened: ", error);
       });
@@ -154,7 +150,6 @@ const BecomeAMemberForm = (props) => {
     delete signupData["password"];
     const db = getDatabase();
 
-    console.log("writesignupDataToFirebase", signupData);
     set(ref(db, `validation/${userid}/current`), {
       ...signupData,
       created: new Date().toISOString(),

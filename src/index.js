@@ -21,7 +21,7 @@ ReactDOM.render(
       <Route path="/app/validation" component={ValidationPage} />
       <Route path="/app/profile" component={ValidationPage} />
       <Route path="/signup" component={SignupPage} />
-      <Route path="/login-page" component={LoginPage} />
+      <Route path="/login" component={LoginPage} />
       <Route path="/" component={SignupPage} />
     </Switch>
   </Router>,

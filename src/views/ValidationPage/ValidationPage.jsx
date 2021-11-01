@@ -20,8 +20,7 @@ import landingPageStyle from "assets/jss/material-kit-react/views/landingPage.js
 
 // Sections for this page
 import ValidationForm from "./ValidationForm.jsx";
-//import firebase from "gatsby-plugin-firebase";
-import { getUser } from "components/Auth/auth";
+
 import {
   setValidationRetry,
   persistValidationStatus,
@@ -41,11 +40,6 @@ const ValidationPage = () => {
   const [contentLoaded, setContentLoaded] = useState(false);
 
   useEffect(() => {
-    const user = getUser();
-
-    const uid = user.uid;
-    console.log(`validationPage uid: ${uid}`);
-
     const offStatusValueChange = onStatusValueChange((data) => {
       console.log(data);
       setValidationStatus({ ...data });
@@ -59,7 +53,6 @@ const ValidationPage = () => {
   }, []);
 
   const revalidate = () => {
-    console.log("helleo");
     setValidationRetry();
   };
 
