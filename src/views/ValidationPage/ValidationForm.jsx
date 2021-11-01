@@ -91,6 +91,7 @@ const ValidationForm = () => {
   };
 
   const uploadPhoto = (event) => {
+    console.log("uploadPhoto, firebaseImages: ", firebaseImages);
     fileInputRef.current.click();
     event.stopPropagation();
     event.preventDefault();
@@ -100,6 +101,8 @@ const ValidationForm = () => {
     const file = event.target.files[0];
     storeInMemory(file);
     uploadToFirebase(file);
+    console.log("after uploadToFirebase, firebaseImages: ", firebaseImages);
+    console.log("after uploadToFirebase, firebaseImages: ", firebaseImages);
   };
 
   const storeInMemory = (file) => {
@@ -117,10 +120,15 @@ const ValidationForm = () => {
       contentType: file.type,
     };
     console.log(`uploadToFirebase, metadata= ${metadata}`);
-    //dummy
-    setFirebaseImages("foobar");
-    persistImage(file, (snapshot) => {
-      console.log("after persistImage: ", snapshot);
+
+    persistImage(file, (metadata) => {
+      console.log("111 - firebaseImages:", firebaseImages);
+      console.log("after persistImage: ", metadata);
+      console.log("after persistImage.fullPath: ", metadata.fullPath);
+      firebaseImages.push(metadata.fullPath);
+      console.log("222- firebaseImages:", firebaseImages);
+      setFirebaseImages(firebaseImages);
+      console.log("333- firebaseImages:", firebaseImages);
     });
     // var storage = firebase.storage();
     // const storageRef = storage.ref();
@@ -155,6 +163,11 @@ const ValidationForm = () => {
     }
   };
 
+  const handleOnDeleteImage = (src) => {
+    const newImages = images.filter((imageSrc) => imageSrc !== src);
+    setImages(newImages);
+  };
+
   const validatedView = () => {
     return (
       <div>
@@ -171,22 +184,6 @@ const ValidationForm = () => {
         </Link>
       </div>
     );
-  };
-
-  const handleOnDeleteImage = (src) => {
-    const newImages = images.filter((imageSrc) => imageSrc !== src);
-    setImages(newImages);
-
-    // var storage = firebase.storage();
-    // const storageRef = storage.refFromURL(src);
-    // storageRef
-    //   .delete()
-    //   .then(function (snapshot) {
-    //     // file deleted
-    //   })
-    //   .catch(function (error) {
-    //     console.error("delete failed:", error);
-    //   });
   };
 
   const imageView = () => {

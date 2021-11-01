@@ -9,7 +9,12 @@ import {
   off,
   update,
 } from "firebase/database";
-import { getStorage, uploadBytes, ref as storageRef } from "firebase/storage";
+import {
+  deleteObject,
+  getStorage,
+  uploadBytes,
+  ref as storageRef,
+} from "firebase/storage";
 
 export const persistValidationStatus = (status, message) => {
   console.log("persistValidationStatus", status, message);
@@ -95,16 +100,39 @@ export const setValidationRetry = () => {
 };
 
 export const persistImage = (file, success) => {
-  console.log("persistImage", file);
   const user = getUser();
 
   const uid = user.uid;
   const storage = getStorage();
   const baseRef = storageRef(storage, `validation/${uid}`);
   const fileRef = storageRef(baseRef, file.name);
-  console.log("fileref=", fileRef);
+
   uploadBytes(fileRef, file).then((snapshot) => {
-    console.log("Uploaded a blob or file!", snapshot);
-    success(snapshot);
+    success(snapshot.metadata);
   });
+};
+
+export const deleteImage = (url, success, error) => {
+  const storage = getStorage();
+  const imageRef = storageRef(storage, url);
+  deleteObject(imageRef)
+    .then((snapshot) => {
+      console.log(`file ${url}deleted, snapshot:`, snapshot);
+      if (success) success(snapshot);
+    })
+    .catch((err) => {
+      console.log("delete ended up in an error", err);
+      if (error) error(err);
+    });
+
+  // var storage = firebase.storage();
+  // const storageRef = storage.refFromURL(src);
+  // storageRef
+  //   .delete()
+  //   .then(function (snapshot) {
+  //     // file deleted
+  //   })
+  //   .catch(function (error) {
+  //     console.error("delete failed:", error);
+  //   });
 };

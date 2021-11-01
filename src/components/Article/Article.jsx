@@ -37,7 +37,7 @@ const Article = (props) => {
 export default Article;
 
 Article.propTypes = {
-  title: PropTypes.node.isRequired,
+  title: PropTypes.string,
   children: PropTypes.node.isRequired,
   cta: PropTypes.node,
 };
