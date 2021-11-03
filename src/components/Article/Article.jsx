@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react";
+import { Link } from "react-router-dom";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import productStyle from "assets/jss/material-kit-react/views/landingPageSections/productStyle.js";
@@ -39,5 +39,5 @@ export default Article;
 Article.propTypes = {
   title: PropTypes.string,
   children: PropTypes.node.isRequired,
-  cta: PropTypes.node,
+  cta: PropTypes.string,
 };

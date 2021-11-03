@@ -8,8 +8,9 @@ import "assets/scss/material-kit-react.scss?v=1.10.0";
 // pages for this product
 import LoginPage from "views/LoginPage/LoginPage.js";
 import SignupPage from "views/SignupPage/SignupPage";
-import ReactGA from "react-ga";
 import ValidationPage from "views/ValidationPage/ValidationPage";
+import LandingPage from "views/LandingPage/LandingPage.jsx";
+import ReactGA from "react-ga";
 
 var hist = createBrowserHistory();
 
@@ -22,7 +23,7 @@ ReactDOM.render(
       <Route path="/app/profile" component={ValidationPage} />
       <Route path="/signup" component={SignupPage} />
       <Route path="/login" component={LoginPage} />
-      <Route path="/" component={SignupPage} />
+      <Route path="/" component={LandingPage} />
     </Switch>
   </Router>,
   document.getElementById("root")
