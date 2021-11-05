@@ -39,5 +39,5 @@ export default Article;
 Article.propTypes = {
   title: PropTypes.string,
   children: PropTypes.node.isRequired,
-  cta: PropTypes.string,
+  cta: PropTypes.array,
 };
