@@ -52,12 +52,18 @@ export const setDisplayName = (firebase, name) => {
   });
 };
 
-export const signin = (email, pass) => {
+export const signin = (email, pass, onSuccess, onError) => {
   console.log("signin: ", email, pass);
   const auth = getAuth(app);
   signInWithEmailAndPassword(auth, email, pass)
     .then((result) => {
       console.log("signin is ok: ", result);
+      const user = result.user;
+      setUser(user);
+      onSuccess(user);
     })
-    .catch((error) => console.log("signin error: ", error));
+    .catch((error) => {
+      console.log("signin error: ", error);
+      onError(error);
+    });
 };
