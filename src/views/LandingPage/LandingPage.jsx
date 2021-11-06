@@ -9,12 +9,13 @@ import { makeStyles } from "@material-ui/core/styles";
 // core components
 import Layout from "components/Layout/Layout.jsx";
 import Article from "components/Article/Article.jsx";
-
+import Button from "components/CustomButtons/Button.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Parallax from "components/Parallax/Parallax.js";
 
 import landingPageStyle from "assets/jss/material-kit-react/views/landingPage.js";
+import { logout } from "services/firebase/auth";
 
 // Sections for this page
 
@@ -25,6 +26,10 @@ const LandingPage = () => {
 
   const ctaSignup = [{ link: "signup", text: "Gå med" }];
   const ctaLogin = [{ link: "login", text: "Logga in" }];
+
+  const signOut = () => {
+    logout();
+  };
   return (
     <Layout>
       <Parallax filter image={require("assets/img/zero.jpg").default}>
@@ -56,6 +61,20 @@ const LandingPage = () => {
               Är ni redan med eller har påbörjat er ansökan så ska ni logga in
               istället.
             </p>
+          </Article>
+
+          <Article title="Logga ut">
+            <p className={classes.description}>
+              Om ni är inloggade går det bra att logga ut här
+            </p>
+            <Button
+              color="primary"
+              onClick={() => {
+                signOut();
+              }}
+            >
+              Logga ut
+            </Button>
           </Article>
         </div>
       </div>

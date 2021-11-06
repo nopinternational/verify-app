@@ -16,8 +16,10 @@ export const getUser = () =>
 export const userSignedIn = (firebase_auth) => {
   onAuthStateChanged(firebase_auth, (user) => {
     if (user) {
+      console.log("state changed, user: ", user);
       // User is signed in
     } else {
+      console.log("state changed, user: ", user);
       // No user is signed in
     }
   });
@@ -31,13 +33,16 @@ export const isLoggedIn = () => {
   return !!user.email;
 };
 
-export const logout = (firebase_auth) => {
+export const logout = () => {
   setUser({});
-  return new Promise((resolve) => {
-    signOut(firebase_auth).then(function () {
-      resolve();
-    });
-  });
+  const auth = getAuth(app);
+  signOut(auth);
+
+  // return new Promise((resolve) => {
+  //   signOut(firebase_auth).then(function () {
+  //     resolve();
+  //   });
+  // });
 };
 
 export const setDisplayName = (firebase, name) => {
@@ -60,6 +65,7 @@ export const signin = (email, pass, onSuccess, onError) => {
       console.log("signin is ok: ", result);
       const user = result.user;
       setUser(user);
+      userSignedIn(auth);
       onSuccess(user);
     })
     .catch((error) => {
