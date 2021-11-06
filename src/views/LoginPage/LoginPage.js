@@ -24,6 +24,7 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
 
 import image from "assets/img/zero.jpg";
+import { signin } from "services/firebase/auth";
 
 const useStyles = makeStyles(styles);
 
@@ -43,6 +44,7 @@ export default function LoginPage(/*props*/) {
   const handleSubmit = (event) => {
     console.log("handleSubmit: ", event);
     console.log("loginData: ", loginData);
+    signin(loginData.email, loginData.password);
   };
 
   setTimeout(function () {

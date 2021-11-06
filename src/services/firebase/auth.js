@@ -1,4 +1,10 @@
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import {
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
+import { app } from "./firebase";
 
 export const isBrowser = () => typeof window !== "undefined";
 
@@ -44,4 +50,14 @@ export const setDisplayName = (firebase, name) => {
       .then((success) => console.log("setDisplayName success: ", success))
       .catch((fail) => console.log("setDisplayName fail: ", fail));
   });
+};
+
+export const signin = (email, pass) => {
+  console.log("signin: ", email, pass);
+  const auth = getAuth(app);
+  signInWithEmailAndPassword(auth, email, pass)
+    .then((result) => {
+      console.log("signin is ok: ", result);
+    })
+    .catch((error) => console.log("signin error: ", error));
 };
