@@ -3,6 +3,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { app } from "./firebase";
 
@@ -45,16 +46,18 @@ export const logout = () => {
   // });
 };
 
-export const setDisplayName = (firebase, name) => {
-  return new Promise(() => {
-    firebase
-      .auth()
-      .currentUser.updateProfile({
-        displayName: name,
-      })
-      .then((success) => console.log("setDisplayName success: ", success))
-      .catch((fail) => console.log("setDisplayName fail: ", fail));
-  });
+export const setDisplayName = (user, name) => {
+  // export declare function updateProfile(user: User, { displayName, photoURL: photoUrl }: {
+  //     displayName?: string | null;
+  //     photoURL?: string | null;
+  // }): Promise<void>;
+  updateProfile(user, { displayName: name })
+    .then((f) => {
+      console.log(`update user to name ${name}, ${f}`);
+    })
+    .catch((error) => {
+      console.error("update name error: ", error);
+    });
 };
 
 export const signin = (email, pass, onSuccess, onError) => {
@@ -67,6 +70,9 @@ export const signin = (email, pass, onSuccess, onError) => {
       setUser(user);
       userSignedIn(auth);
       onSuccess(user);
+      const u2 = auth.currentUser;
+      console.log("signin user: ", user);
+      console.log("currentuser: ", u2);
     })
     .catch((error) => {
       console.log("signin error: ", error);

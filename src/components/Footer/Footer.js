@@ -10,6 +10,7 @@ import { List, ListItem, withStyles } from "@material-ui/core";
 import Favorite from "@material-ui/icons/Favorite";
 
 import footerStyle from "assets/jss/material-kit-react/components/footerStyle.js";
+import { getUser } from "services/firebase/auth";
 
 function Footer({ ...props }) {
   const { classes, whiteFont } = props;
@@ -21,9 +22,16 @@ function Footer({ ...props }) {
     [classes.a]: true,
     [classes.footerWhiteFont]: whiteFont,
   });
+
+  const user = () => {
+    const u = getUser();
+    console.log("user:", u);
+    return u.displayName || "unknown";
+  };
   return (
     <footer className={footerClasses}>
       <div className={classes.container}>
+        <div className={classes.left}>user: {user()}</div>
         {/* <div className={classes.left}>
           <List className={classes.list}>
             <ListItem className={classes.inlineBlock}>

@@ -28,7 +28,11 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 import { getDatabase, ref, set } from "firebase/database";
-import { setUser, userSignedIn } from "services/firebase/auth.js";
+import {
+  setUser,
+  userSignedIn,
+  setDisplayName,
+} from "services/firebase/auth.js";
 
 import ReactGA from "react-ga";
 
@@ -99,6 +103,7 @@ const BecomeAMemberForm = (props) => {
       .then((result) => {
         // signInSuccessUrl: '/app/profile',
         userSignedIn(firebase_auth);
+        setDisplayName(result.user, signupData.name);
         setUser(result.user);
         writesignupDataToFirebase(result.user.uid, signupData);
         ReactGA.event({
