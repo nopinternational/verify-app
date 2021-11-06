@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -29,9 +29,26 @@ const useStyles = makeStyles(styles);
 
 export default function LoginPage(/*props*/) {
   const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (event) => {
+    const name = event.target.getAttribute("name");
+
+    setLoginData({ ...loginData, [name]: event.target.value });
+  };
+
+  const handleSubmit = (event) => {
+    console.log("handleSubmit: ", event);
+    console.log("loginData: ", loginData);
+  };
+
   setTimeout(function () {
     setCardAnimation("");
   }, 700);
+
   const classes = useStyles();
   //const { ...rest } = props;
   return (
@@ -114,13 +131,16 @@ export default function LoginPage(/*props*/) {
                     />
                     */}
                     <CustomInput
-                      labelText="Email..."
+                      labelText="Epost"
                       id="email"
                       formControlProps={{
                         fullWidth: true,
                       }}
                       inputProps={{
                         type: "email",
+                        name: "email",
+                        onChange: handleChange,
+                        value: loginData.email,
                         endAdornment: (
                           <InputAdornment position="end">
                             <Email className={classes.inputIconsColor} />
@@ -136,6 +156,9 @@ export default function LoginPage(/*props*/) {
                       }}
                       inputProps={{
                         type: "password",
+                        name: "password",
+                        onChange: handleChange,
+                        value: loginData.password,
                         endAdornment: (
                           <InputAdornment position="end">
                             <Icon className={classes.inputIconsColor}>
@@ -148,7 +171,12 @@ export default function LoginPage(/*props*/) {
                     />
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
-                    <Button simple color="primary" size="lg">
+                    <Button
+                      simple
+                      color="primary"
+                      size="lg"
+                      onClick={handleSubmit}
+                    >
                       <FavoriteIcon className={classes.icons} />
                       Låt det roliga börja
                     </Button>

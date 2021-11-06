@@ -27,13 +27,13 @@ import GridItem from "components/Grid/GridItem.js";
 import productStyle from "assets/jss/material-kit-react/views/landingPageSections/productStyle.js";
 
 //import firebase from "gatsby-plugin-firebase";
-import { getUser } from "components/Auth/auth";
+import { getUser } from "services/firebase/auth";
 import {
   setValidationPending,
   persistSignupData,
   onValidationDataChange,
   persistImage,
-} from "services/validationService.js";
+} from "services/firebase/validationService.js";
 
 //import { trackCustomEvent } from "gatsby-plugin-google-analytics";
 import ReactGA from "react-ga";

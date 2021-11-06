@@ -28,7 +28,7 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 import { getDatabase, ref, set } from "firebase/database";
-import { setUser, userSignedIn } from "components/Auth/auth";
+import { setUser, userSignedIn } from "services/firebase/auth.js";
 
 import ReactGA from "react-ga";
 

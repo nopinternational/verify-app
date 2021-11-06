@@ -1,4 +1,4 @@
-import { getUser } from "../components/Auth/auth";
+import { getUser } from "./auth";
 import {
   getDatabase,
   ref,

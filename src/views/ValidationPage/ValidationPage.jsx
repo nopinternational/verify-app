@@ -25,7 +25,7 @@ import {
   setValidationRetry,
   persistValidationStatus,
   onStatusValueChange,
-} from "services/validationService.js";
+} from "services/firebase/validationService.js";
 
 const useStyles = makeStyles(landingPageStyle);
 
