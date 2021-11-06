@@ -72,8 +72,16 @@ export default function LoginPage(/*props*/) {
         var errorCode = error.code;
         var errorMessage = error.message;
         errorMessage;
-        if (errorCode === "auth/weak-password") {
+        if (errorCode === "auth/user-not-found") {
+          setDialogMessage("Felaktig kombination av epost och lösenord");
+          setShowDialog(true);
+        } else if (errorCode === "auth/weak-password") {
           setDialogMessage("Lösenordet är för enkelt, välj ett svårare");
+          setShowDialog(true);
+        } else if (errorCode === "auth/too-many-requests") {
+          setDialogMessage(
+            "Ditt konto har av säkerhetsskäl temporärt blivit blockat. Försök igen senare eller återställ ditt lösenord."
+          );
           setShowDialog(true);
         } else if (errorCode === "auth/email-already-in-use") {
           setShowDialog(true);
@@ -83,7 +91,7 @@ export default function LoginPage(/*props*/) {
         } else if (errorCode === "auth/invalid-email") {
           setDialogMessage("Eposten har ett ogiltigt format");
           setShowDialog(true);
-        } else if (errorCode === "auth/operation-not-allowed") {
+        } else {
           setDialogMessage(
             "Hoppla, nu har det hänt något oväntat. Vi ska ta reda på vad som hänt och fixa det!"
           );
@@ -237,7 +245,7 @@ export default function LoginPage(/*props*/) {
                   aria-describedby="alert-dialog-description"
                 >
                   <DialogTitle id="alert-dialog-title">
-                    {"Fel i forumläret"}
+                    {"Felaktig login"}
                   </DialogTitle>
                   <DialogContent>
                     <DialogContentText id="alert-dialog-description">
