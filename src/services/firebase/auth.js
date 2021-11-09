@@ -35,9 +35,10 @@ export const isLoggedIn = () => {
 };
 
 export const logout = () => {
+  console.log("logout");
   setUser({});
   const auth = getAuth(app);
-  signOut(auth);
+  return signOut(auth);
 
   // return new Promise((resolve) => {
   //   signOut(firebase_auth).then(function () {

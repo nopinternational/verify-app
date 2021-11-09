@@ -1,7 +1,7 @@
 /*eslint-disable*/
 import React from "react";
 // react components for routing our app without refresh
-import { Link } from "react";
+import { Link } from "react-router-dom";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -18,16 +18,24 @@ import Button from "components/CustomButtons/Button.js";
 
 import ReactGA from "react-ga";
 import headerLinksStyle from "assets/jss/material-kit-react/components/headerLinksStyle.js";
-import { app as firebase } from "services/firebase.js";
-import { logout, isLoggedIn } from "components/Auth/auth";
+//import { app as firebase } from "services/firebase.js";
+import { logout, isLoggedIn, getUser } from "services/firebase/auth";
 
 const HeaderLinks = (props) => {
   const handleSignout = () => {
-    logout(firebase);
+    logout().then(() => {
+      console.log("user is logged out");
+    });
     ReactGA.event({
       category: "MyAccount",
       action: "Signout clicked",
     });
+  };
+
+  const user = () => {
+    const u = getUser();
+    console.log("user:", u);
+    return u.displayName || "";
   };
 
   const getLoggedInItems = () => {
@@ -37,6 +45,7 @@ const HeaderLinks = (props) => {
       //     Min sida
       //   </Button>
       // </Link>,
+      <Button>{user()}</Button>,
       <Link to={"/app/profile"} className={classes.link}>
         <Button color="transparent" className={classes.navLink}>
           Min sida

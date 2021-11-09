@@ -1,10 +1,15 @@
 import React from "react";
 import Header from "components/Header/Header.jsx";
 import Footer from "components/Footer/Footer.js";
-// import HeaderLinks from "components/Header/HeaderLinks.jsx";
+import HeaderLinks from "components/Header/HeaderLinks.jsx";
 const dashboardRoutes = [];
 import PropTypes from "prop-types";
+import { isLoggedIn } from "services/firebase/auth";
 
+const rightLinks = () => {
+  if (isLoggedIn()) return <HeaderLinks />;
+  return null;
+};
 const Layout = ({ children }) => {
   return (
     <>
@@ -12,7 +17,7 @@ const Layout = ({ children }) => {
         color="transparent"
         routes={dashboardRoutes}
         brand="Night of Passion"
-        //rightLinks={<HeaderLinks />}
+        rightLinks={rightLinks()}
         fixed
         changeColorOnScroll={{
           height: 80,
