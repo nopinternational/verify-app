@@ -63,12 +63,10 @@ export default function LoginPage(/*props*/) {
     signin(
       loginData.email,
       loginData.password,
-      (user) => {
-        console.log("signin success for user: ", user);
+      () => {
         history.push("/app/validation");
       },
       (error) => {
-        console.log("error while signing in", error);
         var errorCode = error.code;
         var errorMessage = error.message;
         errorMessage;
@@ -227,12 +225,7 @@ export default function LoginPage(/*props*/) {
                     />
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
-                    <Button
-                      simple
-                      color="primary"
-                      size="lg"
-                      onClick={handleSubmit}
-                    >
+                    <Button color="primary" size="lg" onClick={handleSubmit}>
                       <FavoriteIcon className={classes.icons} />
                       Låt det roliga börja
                     </Button>

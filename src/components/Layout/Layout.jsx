@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -21,56 +21,59 @@ import { logout, isLoggedIn, getUser } from "services/firebase/auth";
 
 const dashboardRoutes = [];
 
-const handleSignout = (event) => {
-  event.preventDefault();
-  logout().then(() => {
-    console.log("user is logged out");
-  });
-  ReactGA.event({
-    category: "MyAccount",
-    action: "Signout clicked",
-  });
-};
+const Layout = ({ children }) => {
+  const useStyles = makeStyles(styles);
+  const classes = useStyles();
+  const history = useHistory();
 
-const user = () => {
-  const u = getUser();
-  console.log("user:", u);
-  return u.displayName || "";
-};
+  const user = () => {
+    const u = getUser();
+    console.log("user:", u);
+    return u.displayName || "";
+  };
 
-const rightLinks = (classes) => {
-  if (isLoggedIn())
-    return (
-      <List className={classes.list}>
-        <ListItem className={classes.listItem}>
-          <Button
-            href=""
-            className={classes.navLink}
-            onClick={(e) => e.preventDefault()}
-            color="transparent"
-          >
-            {user()}
-          </Button>
-        </ListItem>
-        <ListItem className={classes.listItem}>
-          <Link to={"/"} className={classes.link}>
+  const handleSignout = (event) => {
+    event.preventDefault();
+    logout().then(() => {
+      console.log("user is logged out");
+      history.push("/");
+    });
+    ReactGA.event({
+      category: "MyAccount",
+      action: "Signout clicked",
+    });
+  };
+
+  const rightLinks = (classes) => {
+    if (isLoggedIn())
+      return (
+        <List className={classes.list}>
+          <ListItem className={classes.listItem}>
             <Button
-              href=""
+              disabled
               className={classes.navLink}
-              onClick={(e) => handleSignout(e)}
+              onClick={(e) => e.preventDefault()}
               color="transparent"
             >
-              Logga ut
+              {user()}
             </Button>
-          </Link>
-        </ListItem>
-      </List>
-    );
-  return null;
-};
-const useStyles = makeStyles(styles);
-const Layout = ({ children }) => {
-  const classes = useStyles();
+          </ListItem>
+          <ListItem className={classes.listItem}>
+            <Link to={"/"} className={classes.link}>
+              <Button
+                href=""
+                className={classes.navLink}
+                onClick={(e) => handleSignout(e)}
+                color="transparent"
+              >
+                Logga ut
+              </Button>
+            </Link>
+          </ListItem>
+        </List>
+      );
+    return null;
+  };
 
   return (
     <>
