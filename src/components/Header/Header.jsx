@@ -16,12 +16,14 @@ import Drawer from "@material-ui/core/Drawer";
 import Menu from "@material-ui/icons/Menu";
 // core components
 import styles from "assets/jss/material-kit-react/components/headerStyle.js";
+import { isLoggedIn } from "services/firebase/auth";
 
 const useStyles = makeStyles(styles);
 
 export default function Header(props) {
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
   React.useEffect(() => {
     if (props.changeColorOnScroll) {
       window.addEventListener("scroll", headerColorChange);
@@ -66,6 +68,7 @@ export default function Header(props) {
       <Button className={classes.title}>{brand}</Button>
     </Link>
   );
+
   return (
     <AppBar className={appBarClasses}>
       <Toolbar className={classes.container}>
@@ -79,18 +82,22 @@ export default function Header(props) {
             brandComponent
           )}
         </div>
-        <Hidden smDown implementation="css">
-          {rightLinks}
-        </Hidden>
-        <Hidden mdUp>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerToggle}
-          >
-            <Menu />
-          </IconButton>
-        </Hidden>
+        {isLoggedIn() && (
+          <>
+            <Hidden smDown implementation="css">
+              {rightLinks}
+            </Hidden>
+            <Hidden mdUp>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                onClick={handleDrawerToggle}
+              >
+                <Menu />
+              </IconButton>
+            </Hidden>
+          </>
+        )}
       </Toolbar>
       <Hidden mdUp implementation="js">
         <Drawer
@@ -111,7 +118,6 @@ export default function Header(props) {
     </AppBar>
   );
 }
-
 Header.defaultProp = {
   color: "white",
 };
