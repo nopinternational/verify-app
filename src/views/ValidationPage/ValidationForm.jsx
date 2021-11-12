@@ -1,4 +1,4 @@
-import React, { createRef, useState } from "react";
+import React, { createRef, useEffect, useState } from "react";
 import { Link } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -28,6 +28,7 @@ import productStyle from "assets/jss/material-kit-react/views/landingPageSection
 
 //import firebase from "gatsby-plugin-firebase";
 import { getUser } from "services/firebase/auth";
+import { getImageUrl } from "services/firebase/image";
 import {
   setValidationPending,
   persistSignupData,
@@ -57,11 +58,29 @@ const ValidationForm = () => {
   const [firebaseImages, setFirebaseImages] = useState([]);
   const [showDialog, setShowDialog] = useState(false);
 
+  useEffect(() => {
+    console.log("update firebase images");
+    const promiseUrls = firebaseImages.map((ref) => {
+      console.log("ref: ", ref);
+      const u = getImageUrl(ref);
+      return u;
+    });
+    console.log("promiseUrls: ", promiseUrls);
+    Promise.all(promiseUrls).then((resolvedUrls) => {
+      console.log("resolved? ", resolvedUrls);
+      setImages(resolvedUrls);
+    });
+    console.log("promiseUrls: ", promiseUrls);
+  }, [firebaseImages]);
+
   React.useEffect(() => {
     const offValidationDataChange = onValidationDataChange((data) => {
       setSignupData({ ...data });
       setValidated(data.validation);
-      setImages(data.images || []);
+      console.log("DATA LOADED: ", data);
+      setFirebaseImages(data.firebaseImages);
+
+      setImages(data.images || [[]]);
     });
 
     //componentWillUnmount
