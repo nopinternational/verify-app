@@ -26,9 +26,8 @@ import GridItem from "components/Grid/GridItem.js";
 
 import productStyle from "assets/jss/material-kit-react/views/landingPageSections/productStyle.js";
 
-//import firebase from "gatsby-plugin-firebase";
 import { getUser } from "services/firebase/auth";
-import { getImageUrl } from "services/firebase/image";
+//import { getImageUrl } from "services/firebase/image";
 import {
   setValidationPending,
   persistSignupData,
@@ -51,36 +50,44 @@ const ValidationForm = () => {
     name: "",
     email: "",
     message: "",
+    images: {},
   });
 
   const [isValidated, setValidated] = useState(false);
-  const [images, setImages] = useState([]);
-  const [firebaseImages, setFirebaseImages] = useState([]);
+  const [images, setImages] = useState([{ url: "", ref: "" }]);
+  //const [firebaseImages, setFirebaseImages] = useState([]);
   const [showDialog, setShowDialog] = useState(false);
 
-  useEffect(() => {
-    console.log("update firebase images");
-    const promiseUrls = firebaseImages.map((ref) => {
-      console.log("ref: ", ref);
-      const u = getImageUrl(ref);
-      return u;
-    });
-    console.log("promiseUrls: ", promiseUrls);
-    Promise.all(promiseUrls).then((resolvedUrls) => {
-      console.log("resolved? ", resolvedUrls);
-      setImages(resolvedUrls);
-    });
-    console.log("promiseUrls: ", promiseUrls);
-  }, [firebaseImages]);
+  // useEffect(() => {
+  //   if ("foo" == fileInputRef) {
+  //     console.log("update firebase images");
+  //     const promiseUrls = firebaseImages.map((ref) => {
+  //       console.log("ref: ", ref);
+  //       const u = getImageUrl(ref);
+  //       return u;
+  //     });
+  //     console.log("promiseUrls: ", promiseUrls);
+  //     Promise.all(promiseUrls).then((resolvedUrls) => {
+  //       console.log("resolved? ", resolvedUrls);
+  //       setImages(resolvedUrls);
+  //     });
+  //     console.log("promiseUrls: ", promiseUrls);
+  //   }
+  // }, [firebaseImages]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const offValidationDataChange = onValidationDataChange((data) => {
       setSignupData({ ...data });
       setValidated(data.validation);
       console.log("DATA LOADED: ", data);
-      setFirebaseImages(data.firebaseImages);
 
-      setImages(data.images || [[]]);
+      //setFirebaseImages(data.firebaseImages);
+      let imgs = [];
+      if (data.images) {
+        imgs = data.images;
+        console.log("imgs before mapping: ", imgs);
+      }
+      setImages(imgs || []);
     });
 
     //componentWillUnmount
@@ -101,7 +108,7 @@ const ValidationForm = () => {
   const writesignupDataToFirebase = (userid, signupData) => {
     delete signupData["password"];
 
-    persistSignupData(userid, signupData, firebaseImages);
+    persistSignupData(userid, signupData, images);
   };
 
   const uploadPhoto = (event) => {
@@ -128,8 +135,12 @@ const ValidationForm = () => {
 
   const uploadToFirebase = (file) => {
     persistImage(file, (metadata) => {
-      firebaseImages.push(metadata.fullPath);
-      setFirebaseImages(firebaseImages);
+      //firebaseImages.push(metadata.fullPath);
+      //setFirebaseImages(firebaseImages);
+      images.push({ ref: metadata.fullPath });
+      setImages(images);
+      console.log("images: ", images);
+      setSignupData({ ...signupData, images: images });
     });
   };
 
@@ -140,7 +151,7 @@ const ValidationForm = () => {
         category: "Profile",
         action: "Validate Clicked",
       });
-      setValidationPending();
+      setValidationPending;
       writesignupDataToFirebase(getUser().uid, signupData);
       ReactGA.event({
         category: "Signup",
@@ -150,7 +161,7 @@ const ValidationForm = () => {
   };
 
   const handleOnDeleteImage = (src) => {
-    const newImages = images.filter((imageSrc) => imageSrc !== src);
+    const newImages = images.filter((img) => img.url !== src);
     setImages(newImages);
   };
 
@@ -174,13 +185,18 @@ const ValidationForm = () => {
 
   const imageView = () => {
     if (!images || images.length === 0) return null;
+    console.log("imageView.images: ", images);
     return (
       <div>
         <GridContainer>
           {images.map((image, index) => {
+            console.log("imageView.images.image: ", image);
             return (
               <GridItem xs={12} sm={6} md={4} key={index}>
-                <ValidationImage src={image} onDelete={handleOnDeleteImage} />
+                <ValidationImage
+                  imageref={image.ref}
+                  onDelete={handleOnDeleteImage}
+                />
               </GridItem>
             );
           })}

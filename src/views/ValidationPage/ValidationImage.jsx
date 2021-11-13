@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -6,18 +6,28 @@ import { makeStyles } from "@material-ui/core/styles";
 import Button from "components/CustomButtons/Button.js";
 
 import typographyStyle from "assets/jss/material-kit-react/views/componentsSections/typographyStyle.js";
-
+import { getImageUrl } from "services/firebase/image";
 import PropTypes from "prop-types";
 
 const useStyles = makeStyles(typographyStyle);
 
 const ValidationImage = (props) => {
   const classes = useStyles();
-  const { src, onDelete } = props;
+  const { imageref, onDelete } = props;
+  const [src, setSrc] = useState();
+  const [imgref] = useState();
+
+  useEffect(() => {
+    console.log(`${imageref} => ???`);
+    getImageUrl(imageref).then((url) => {
+      console.log(`${imageref} => ${url}`);
+      setSrc(url);
+    });
+  }, [imgref]);
 
   const onclick = (event) => {
     event.value;
-    onDelete(src);
+    onDelete(imageref);
   };
   return (
     <div>
@@ -34,7 +44,7 @@ const ValidationImage = (props) => {
 };
 
 ValidationImage.propTypes = {
-  src: PropTypes.string,
+  imageref: PropTypes.string,
   onDelete: PropTypes.func,
 };
 export default ValidationImage;

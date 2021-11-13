@@ -32,7 +32,7 @@ export const persistValidationStatus = (status, message) => {
   }
 };
 
-export const persistSignupData = (userid, signupData, firebaseImages) => {
+export const persistSignupData = (userid, signupData, images) => {
   const db = getDatabase();
   const validationDataRef = ref(db, `validation/${userid}`);
   //const dataRef = firebase.database().ref(`validation/${userid}`);
@@ -42,7 +42,7 @@ export const persistSignupData = (userid, signupData, firebaseImages) => {
   push(validationDataRef, {
     message: signupData.message,
     created: now,
-    firebaseImages,
+    images,
   }).catch((error) => {
     console.error(error);
   });
@@ -50,7 +50,7 @@ export const persistSignupData = (userid, signupData, firebaseImages) => {
   update(child(validationDataRef, "current"), {
     message: signupData.message,
     created: now,
-    firebaseImages,
+    images,
   }).catch((error) => {
     console.error(error);
   });
