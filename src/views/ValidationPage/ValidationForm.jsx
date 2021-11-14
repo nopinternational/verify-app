@@ -54,7 +54,7 @@ const ValidationForm = () => {
   });
 
   const [isValidated, setValidated] = useState(false);
-  const [images, setImages] = useState([{ url: "", ref: "" }]);
+  const [images, setImages] = useState([{ ref: "" }]);
   //const [firebaseImages, setFirebaseImages] = useState([]);
   const [showDialog, setShowDialog] = useState(false);
 
@@ -119,19 +119,19 @@ const ValidationForm = () => {
 
   const fileSelectorChange = (event) => {
     const file = event.target.files[0];
-    storeInMemory(file);
+    //storeInMemory(file);
     uploadToFirebase(file);
   };
 
-  const storeInMemory = (file) => {
-    var reader = new FileReader();
-    reader.onload = function (event) {
-      const url = event.target.result;
-      const newImages = images.concat(url);
-      setImages(newImages);
-    };
-    reader.readAsDataURL(file);
-  };
+  // const storeInMemory = (file) => {
+  //   var reader = new FileReader();
+  //   reader.onload = function (event) {
+  //     const url = event.target.result;
+  //     const newImages = images.concat(url);
+  //     setImages(newImages);
+  //   };
+  //   reader.readAsDataURL(file);
+  // };
 
   const uploadToFirebase = (file) => {
     persistImage(file, (metadata) => {
@@ -160,8 +160,8 @@ const ValidationForm = () => {
     }
   };
 
-  const handleOnDeleteImage = (src) => {
-    const newImages = images.filter((img) => img.url !== src);
+  const handleOnDeleteImage = (ref) => {
+    const newImages = images.filter((img) => img.ref !== ref);
     setImages(newImages);
   };
 

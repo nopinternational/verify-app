@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import ErrorIcon from "@material-ui/icons/Error";
 
 // core components
 import Button from "components/CustomButtons/Button.js";
@@ -12,24 +14,57 @@ import PropTypes from "prop-types";
 const useStyles = makeStyles(typographyStyle);
 
 const ValidationImage = (props) => {
+  const [isLoaded, setLoaded] = useState(false);
+  const [isError, setError] = useState(false);
   const classes = useStyles();
   const { imageref, onDelete } = props;
   const [src, setSrc] = useState();
-  const [imgref] = useState();
 
   useEffect(() => {
+    setLoaded(false);
     console.log(`${imageref} => ???`);
-    getImageUrl(imageref).then((url) => {
-      console.log(`${imageref} => ${url}`);
-      setSrc(url);
-    });
-  }, [imgref]);
+    getImageUrl(imageref)
+      .then((url) => {
+        console.log(`${imageref} => ${url}`);
+        setSrc(url);
+        setError(false);
+        setLoaded(true);
+      })
+      .catch((error) => {
+        setError(true);
+        setLoaded(true);
+        console.log("errorLoading image: ", error);
+      });
+  }, [imageref]);
 
   const onclick = (event) => {
     event.value;
     onDelete(imageref);
   };
-  return (
+
+  const renderSpinner = () => (
+    <div>
+      <CircularProgress />
+    </div>
+  );
+
+  const renderLoaded = () => {
+    return isError ? renderError : renderImage;
+  };
+
+  const renderError = (
+    <div>
+      <div>
+        <ErrorIcon />
+      </div>
+      <div>Image could not be loaded</div>
+      <Button type="button" color="primary" size="sm" onClick={onclick}>
+        Ta bort
+      </Button>
+    </div>
+  );
+
+  const renderImage = (
     <div>
       <img
         className={classes.imgRounded + " " + classes.imgFluid}
@@ -41,6 +76,8 @@ const ValidationImage = (props) => {
       </Button>
     </div>
   );
+
+  return isLoaded ? renderLoaded() : renderSpinner();
 };
 
 ValidationImage.propTypes = {
