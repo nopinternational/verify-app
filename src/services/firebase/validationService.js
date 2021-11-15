@@ -32,13 +32,13 @@ export const persistValidationStatus = (status, message) => {
   }
 };
 
-export const persistSignupData = (userid, signupData, images) => {
+export const persistSignupData = (userid, signupData) => {
   const db = getDatabase();
   const validationDataRef = ref(db, `validation/${userid}`);
   //const dataRef = firebase.database().ref(`validation/${userid}`);
   const now = new Date().toISOString();
   //.push(userid + "-hello")
-
+  console.log("persistSignupData: ", signupData);
   push(validationDataRef, {
     ...signupData,
     created: now,
@@ -47,9 +47,8 @@ export const persistSignupData = (userid, signupData, images) => {
   });
 
   update(child(validationDataRef, "current"), {
-    message: signupData.message,
+    ...signupData,
     created: now,
-    images,
   }).catch((error) => {
     console.error(error);
   });

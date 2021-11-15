@@ -13,6 +13,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Email from "@material-ui/icons/Email";
 import People from "@material-ui/icons/People";
 import Message from "@material-ui/icons/Message";
+import DateRangeIcon from "@material-ui/icons/DateRange";
 
 import AddAPhoto from "@material-ui/icons/AddAPhoto";
 import VerifiedUser from "@material-ui/icons/VerifiedUser";
@@ -47,7 +48,11 @@ const ValidationForm = () => {
 
   const fileInputRef = createRef();
   const [signupData, setSignupData] = useState({
-    name: "",
+    username: "",
+    name1: "",
+    name2: "",
+    birthyear1: "",
+    birthyear2: "",
     email: "",
     message: "",
     images: {},
@@ -59,6 +64,7 @@ const ValidationForm = () => {
 
   useEffect(() => {
     const offValidationDataChange = onValidationDataChange((data) => {
+      console.log("DATA LOADED: ", data);
       setSignupData({ ...data });
       setValidated(data.validation);
       let imgs = [];
@@ -86,7 +92,7 @@ const ValidationForm = () => {
   const writesignupDataToFirebase = (userid, signupData) => {
     delete signupData["password"];
 
-    persistSignupData(userid, signupData, images);
+    persistSignupData(userid, signupData);
   };
 
   const uploadPhoto = (event) => {
@@ -184,16 +190,17 @@ const ValidationForm = () => {
       <div>
         <form id="signup-form">
           <CustomInput
-            labelText="Namn"
-            id="name"
+            labelText="Önskat användarnamn"
+            id="username"
             formControlProps={{
               fullWidth: true,
             }}
             inputProps={{
-              name: "name",
+              name: "username",
               onChange: handleChange,
               type: "text",
-              value: signupData.name,
+              disabled: true,
+              value: signupData.username,
               endAdornment: (
                 <InputAdornment position="end">
                   <People className={classes.inputIconsColor} />
@@ -208,8 +215,8 @@ const ValidationForm = () => {
               fullWidth: true,
             }}
             inputProps={{
-              onChange: handleChange,
               name: "email",
+              onChange: handleChange,
               type: "email",
               disabled: true,
               autoComplete: "email",
@@ -221,6 +228,83 @@ const ValidationForm = () => {
               ),
             }}
           />
+
+          <CustomInput
+            labelText="Namn person #1"
+            id="name1"
+            formControlProps={{
+              fullWidth: true,
+            }}
+            inputProps={{
+              name: "name1",
+              onChange: handleChange,
+              type: "text",
+              value: signupData.name1,
+              endAdornment: (
+                <InputAdornment position="end">
+                  <People className={classes.inputIconsColor} />
+                </InputAdornment>
+              ),
+            }}
+          />
+
+          <CustomInput
+            labelText="Födelseår person #1"
+            id="birthyear1"
+            formControlProps={{
+              fullWidth: true,
+            }}
+            inputProps={{
+              name: "birthyear1",
+              onChange: handleChange,
+              type: "number",
+              value: signupData.birthyear1,
+              endAdornment: (
+                <InputAdornment position="end">
+                  <DateRangeIcon className={classes.inputIconsColor} />
+                </InputAdornment>
+              ),
+            }}
+          />
+
+          <CustomInput
+            labelText="Namn person #2"
+            id="name2"
+            formControlProps={{
+              fullWidth: true,
+            }}
+            inputProps={{
+              name: "name2",
+              onChange: handleChange,
+              type: "text",
+              value: signupData.name2,
+              endAdornment: (
+                <InputAdornment position="end">
+                  <People className={classes.inputIconsColor} />
+                </InputAdornment>
+              ),
+            }}
+          />
+
+          <CustomInput
+            labelText="Födelseår person #2"
+            id="birthyear2"
+            formControlProps={{
+              fullWidth: true,
+            }}
+            inputProps={{
+              name: "birthyear2",
+              onChange: handleChange,
+              type: "number",
+              value: signupData.birthyear2,
+              endAdornment: (
+                <InputAdornment position="end">
+                  <DateRangeIcon className={classes.inputIconsColor} />
+                </InputAdornment>
+              ),
+            }}
+          />
+
           <CustomInput
             id="standard-multiline-static"
             label="Multiline"
