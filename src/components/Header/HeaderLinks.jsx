@@ -23,9 +23,7 @@ import { logout, isLoggedIn, getUser } from "services/firebase/auth";
 
 const HeaderLinks = (props) => {
   const handleSignout = () => {
-    logout().then(() => {
-      console.log("user is logged out");
-    });
+    logout().then(() => {});
     ReactGA.event({
       category: "MyAccount",
       action: "Signout clicked",
@@ -34,7 +32,6 @@ const HeaderLinks = (props) => {
 
   const user = () => {
     const u = getUser();
-    console.log("user:", u);
     return u.displayName || "";
   };
 

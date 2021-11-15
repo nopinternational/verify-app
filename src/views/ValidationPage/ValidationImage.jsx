@@ -22,18 +22,16 @@ const ValidationImage = (props) => {
 
   useEffect(() => {
     setLoaded(false);
-    console.log(`${imageref} => ???`);
+
     getImageUrl(imageref)
       .then((url) => {
-        console.log(`${imageref} => ${url}`);
         setSrc(url);
         setError(false);
         setLoaded(true);
       })
-      .catch((error) => {
+      .catch(() => {
         setError(true);
         setLoaded(true);
-        console.log("errorLoading image: ", error);
       });
   }, [imageref]);
 

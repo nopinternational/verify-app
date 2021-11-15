@@ -13,10 +13,6 @@ const isEmpty = (obj) => {
 };
 
 const PublicRoute = ({ component: Component, restricted, ...rest }) => {
-  console.log("restricted: ", restricted);
-  console.log("isLogin(): ", isLogin());
-  console.log("isLogin() && restricted ? ", isLogin() && restricted);
-
   return (
     // restricted = false meaning public route
     // restricted = true meaning restricted route

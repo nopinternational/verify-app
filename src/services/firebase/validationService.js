@@ -40,9 +40,8 @@ export const persistSignupData = (userid, signupData, images) => {
   //.push(userid + "-hello")
 
   push(validationDataRef, {
-    message: signupData.message,
+    ...signupData,
     created: now,
-    images,
   }).catch((error) => {
     console.error(error);
   });

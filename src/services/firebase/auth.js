@@ -17,10 +17,10 @@ export const getUser = () =>
 export const userSignedIn = (firebase_auth) => {
   onAuthStateChanged(firebase_auth, (user) => {
     if (user) {
-      console.log("state changed, user: ", user);
+      //console.log("state changed, user: ", user);
       // User is signed in
     } else {
-      console.log("state changed, user: ", user);
+      //console.log("state changed, user: ", user);
       // No user is signed in
     }
   });
@@ -35,7 +35,6 @@ export const isLoggedIn = () => {
 };
 
 export const logout = () => {
-  console.log("logout");
   setUser({});
   const auth = getAuth(app);
   return signOut(auth);
@@ -54,29 +53,25 @@ export const setDisplayName = (user, name) => {
   // }): Promise<void>;
   updateProfile(user, { displayName: name })
     .then((f) => {
-      console.log(`update user to name ${name}, ${f}`);
+      f;
+      //console.log(`update user to name ${name}, ${f}`);
     })
     .catch((error) => {
-      console.error("update name error: ", error);
+      error;
+      //console.error("update name error: ", error);
     });
 };
 
 export const signin = (email, pass, onSuccess, onError) => {
-  console.log("signin: ", email, pass);
   const auth = getAuth(app);
   signInWithEmailAndPassword(auth, email, pass)
     .then((result) => {
-      console.log("signin is ok: ", result);
       const user = result.user;
       setUser(user);
       userSignedIn(auth);
       onSuccess(user);
-      const u2 = auth.currentUser;
-      console.log("signin user: ", user);
-      console.log("currentuser: ", u2);
     })
     .catch((error) => {
-      console.log("signin error: ", error);
       onError(error);
     });
 };

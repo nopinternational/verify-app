@@ -55,37 +55,15 @@ const ValidationForm = () => {
 
   const [isValidated, setValidated] = useState(false);
   const [images, setImages] = useState([{ ref: "" }]);
-  //const [firebaseImages, setFirebaseImages] = useState([]);
   const [showDialog, setShowDialog] = useState(false);
-
-  // useEffect(() => {
-  //   if ("foo" == fileInputRef) {
-  //     console.log("update firebase images");
-  //     const promiseUrls = firebaseImages.map((ref) => {
-  //       console.log("ref: ", ref);
-  //       const u = getImageUrl(ref);
-  //       return u;
-  //     });
-  //     console.log("promiseUrls: ", promiseUrls);
-  //     Promise.all(promiseUrls).then((resolvedUrls) => {
-  //       console.log("resolved? ", resolvedUrls);
-  //       setImages(resolvedUrls);
-  //     });
-  //     console.log("promiseUrls: ", promiseUrls);
-  //   }
-  // }, [firebaseImages]);
 
   useEffect(() => {
     const offValidationDataChange = onValidationDataChange((data) => {
       setSignupData({ ...data });
       setValidated(data.validation);
-      console.log("DATA LOADED: ", data);
-
-      //setFirebaseImages(data.firebaseImages);
       let imgs = [];
       if (data.images) {
         imgs = data.images;
-        console.log("imgs before mapping: ", imgs);
       }
       setImages(imgs || []);
     });
@@ -139,7 +117,6 @@ const ValidationForm = () => {
       //setFirebaseImages(firebaseImages);
       images.push({ ref: metadata.fullPath });
       setImages(images);
-      console.log("images: ", images);
       setSignupData({ ...signupData, images: images });
     });
   };
@@ -185,12 +162,10 @@ const ValidationForm = () => {
 
   const imageView = () => {
     if (!images || images.length === 0) return null;
-    console.log("imageView.images: ", images);
     return (
       <div>
         <GridContainer>
           {images.map((image, index) => {
-            console.log("imageView.images.image: ", image);
             return (
               <GridItem xs={12} sm={6} md={4} key={index}>
                 <ValidationImage

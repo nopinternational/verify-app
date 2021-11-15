@@ -57,9 +57,7 @@ export default function LoginPage(/*props*/) {
     setLoginData({ ...loginData, [name]: event.target.value });
   };
 
-  const handleSubmit = (event) => {
-    console.log("handleSubmit: ", event);
-    console.log("loginData: ", loginData);
+  const handleSubmit = () => {
     signin(
       loginData.email,
       loginData.password,

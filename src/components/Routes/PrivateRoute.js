@@ -6,9 +6,7 @@ import { getUser } from "services/firebase/auth";
 
 const isLogin = () => {
   const u = getUser();
-  console.log("private route: ", u);
   const empty = !isEmpty(u);
-  console.log("private route: ", empty);
   return empty;
 };
 const isEmpty = (obj) => {

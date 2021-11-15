@@ -41,7 +41,6 @@ const ValidationPage = () => {
 
   useEffect(() => {
     const offStatusValueChange = onStatusValueChange((data) => {
-      console.log(data);
       setValidationStatus({ ...data });
       setContentLoaded(true);
     });

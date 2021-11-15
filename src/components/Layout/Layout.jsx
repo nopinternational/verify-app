@@ -28,14 +28,13 @@ const Layout = ({ children }) => {
 
   const user = () => {
     const u = getUser();
-    console.log("user:", u);
+
     return u.displayName || "";
   };
 
   const handleSignout = (event) => {
     event.preventDefault();
     logout().then(() => {
-      console.log("user is logged out");
       history.push("/");
     });
     ReactGA.event({
