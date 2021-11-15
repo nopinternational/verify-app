@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import classNames from "classnames";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import { FormHelperText } from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
@@ -18,6 +19,7 @@ export default function CustomInput(props) {
   const {
     formControlProps,
     labelText,
+    helperText,
     id,
     labelProps,
     inputProps,
@@ -74,6 +76,9 @@ export default function CustomInput(props) {
         id={id}
         {...inputProps}
       />
+      {helperText !== undefined ? (
+        <FormHelperText>{helperText}</FormHelperText>
+      ) : null}
     </FormControl>
   );
 }
@@ -81,6 +86,7 @@ export default function CustomInput(props) {
 CustomInput.propTypes = {
   labelText: PropTypes.node,
   labelProps: PropTypes.object,
+  helperText: PropTypes.string,
   id: PropTypes.string,
   inputProps: PropTypes.object,
   formControlProps: PropTypes.object,

@@ -76,7 +76,7 @@ const BecomeAMemberForm = (props) => {
     const newSignupData = { ...signupData, [name]: event.target.value };
     setSignupData(newSignupData);
     if (validateOnChange) {
-      let validated = validateName(newSignupData.name);
+      let validated = validateUsername(newSignupData.username);
       validated &= validateEmail(newSignupData.email);
       validated &= validatePassword(newSignupData.password);
       setSubmitEnabled(validated);
@@ -103,7 +103,7 @@ const BecomeAMemberForm = (props) => {
       .then((result) => {
         // signInSuccessUrl: '/app/profile',
         userSignedIn(firebase_auth);
-        setDisplayName(result.user, signupData.name);
+        setDisplayName(result.user, signupData.username);
         setUser(result.user);
         writesignupDataToFirebase(result.user.uid, signupData);
         ReactGA.event({
@@ -170,7 +170,7 @@ const BecomeAMemberForm = (props) => {
       });
     }
     setValidateOnChange(true);
-    let validated = validateName(signupData.name);
+    let validated = validateUsername(signupData.username);
     validated &= validateEmail(signupData.email);
     validated &= validatePassword(signupData.password);
     validated &= validatePassword2(password2);
@@ -184,13 +184,13 @@ const BecomeAMemberForm = (props) => {
     signupUser(signupData);
   };
 
-  const validateName = (name) => {
+  const validateUsername = (name) => {
     let validated = true;
     if (!name || name.length === 0) {
       validated = false;
       setNameErrorState({
         error: true,
-        helperText: "Ni måste ange ert namn",
+        helperText: "Ni måste ange ett önskat användarnamn",
       });
     } else {
       setNameErrorState({
@@ -230,7 +230,7 @@ const BecomeAMemberForm = (props) => {
       validated = false;
       setPasswordErrorState({
         error: true,
-        helperText: "lösenordet måste vara minst 6 tecken",
+        helperText: "Lösenordet måste vara minst 6 tecken",
       });
     } else {
       setPasswordErrorState({
@@ -275,15 +275,15 @@ const BecomeAMemberForm = (props) => {
       <div>
         <form id="signup-form">
           <CustomInput
-            labelText="Namn"
-            id="name"
+            labelText="Önskat användarnamn"
+            id="username"
             helperText={nameErrorState.helperText}
             formControlProps={{
               fullWidth: true,
               error: nameErrorState.error,
             }}
             inputProps={{
-              name: "name",
+              name: "username",
               onChange: handleChange,
               type: "text",
               endAdornment: (
