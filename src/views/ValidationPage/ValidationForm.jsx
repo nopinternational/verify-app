@@ -54,6 +54,7 @@ const ValidationForm = () => {
     birthyear1: "",
     birthyear2: "",
     email: "",
+    description: "",
     message: "",
     images: {},
   });
@@ -304,14 +305,41 @@ const ValidationForm = () => {
               ),
             }}
           />
-
           <CustomInput
             id="standard-multiline-static"
             label="Multiline"
             multiline
             rows={4}
             defaultValue="Default Value"
-            labelText="Ev meddelande till oss, kod, kik etc"
+            labelText="Skriv någon rad om er själva..."
+            helperText="Ex var ni bor, ålder, hur länge ni
+            varit tillsammans, ev erfarenheter och förväntningar etc. Här kan ni även ange kontaktuppgifter såsom mobilnummer,
+            facebook, kik, BC etc. "
+            formControlProps={{
+              fullWidth: true,
+            }}
+            inputProps={{
+              multiline: true,
+              rows: 4,
+              onChange: handleChange,
+              name: "description",
+              type: "text",
+              value: signupData.description,
+
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Message className={classes.inputIconsColor} />
+                </InputAdornment>
+              ),
+            }}
+          />
+          <CustomInput
+            id="standard-multiline-static"
+            label="Multiline"
+            multiline
+            rows={4}
+            defaultValue="Default Value"
+            labelText="Ev meddelande till oss, kod etc"
             formControlProps={{
               fullWidth: true,
             }}
