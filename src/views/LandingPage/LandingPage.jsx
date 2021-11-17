@@ -43,12 +43,12 @@ const LandingPage = () => {
           <Article title="Bli medlem" cta={ctaSignup}>
             <p>
               Nätverket Night of Passion är en exklusiv medlemsklubb. Vi tar
-              emot par som medlemmar som är seriösa och som delar nätverkets
-              värderingar.
+              emot par som medlemmar som är seriösa och som vill bidra till en
+              bättre swingersvärld.
             </p>
             <p className={classes.description}>
-              Nedan kan ni ansöka om att bli medlemmar. För att bli medlemmar så
-              krävs det också att ni verifierar er som ett par.
+              Nedan kan ni ansöka om att gå med. För att bli medlemmar så krävs
+              det också att ni verifierar er som ett par.
             </p>
 
             <p className={classes.description}>Låt det roliga börja!</p>

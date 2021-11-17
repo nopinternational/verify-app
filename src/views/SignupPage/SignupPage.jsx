@@ -39,16 +39,11 @@ const SignupPage = () => {
       <div className={classNames(classes.main, classes.mainRaised)}>
         <div className={classes.container}>
           <Article title="Bli medlem">
-            <p>
-              Nätverket Night of Passion är en exklusiv medlemsklubb. Vi tar
-              emot par som medlemmar som är seriösa och som delar nätverkets
-              värderingar.
-            </p>
             <p className={classes.description}>
-              Nedan kan ni ansöka om att bli medlemmar. För att bli medlemmar så
-              krävs det också att ni verifierar er som ett par. Låt det roliga
-              börja.
+              Vad roligt att ni är intresserade av att vara med. Börja med att
+              fylla i nedanstående så tar vi verifieringen i nästa steg.
             </p>
+
             <BecomeAMemberForm />
           </Article>
         </div>

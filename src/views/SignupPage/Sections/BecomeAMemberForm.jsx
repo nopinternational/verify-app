@@ -112,7 +112,7 @@ const BecomeAMemberForm = (props) => {
         });
         sendVerificationEmail();
 
-        history.push("/app/validation");
+        history.push("/validation");
       })
       .catch(function (error) {
         // Handle Errors here.
@@ -352,7 +352,7 @@ const BecomeAMemberForm = (props) => {
             }}
           />
           <CustomInput
-            labelText="Ev meddelande till oss, kod, kik etc"
+            labelText="Ev meddelande till oss, VIP-kod etc"
             id="message"
             formControlProps={{
               fullWidth: true,

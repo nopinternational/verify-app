@@ -135,7 +135,7 @@ const ValidationForm = () => {
         category: "Profile",
         action: "Validate Clicked",
       });
-      setValidationPending;
+      setValidationPending();
       writesignupDataToFirebase(getUser().uid, signupData);
       ReactGA.event({
         category: "Signup",
@@ -357,6 +357,12 @@ const ValidationForm = () => {
               ),
             }}
           />
+          <p className={classes.description}>
+            Ladda upp en eller flera bilder på er. En av bilderna ska vara en
+            nytagen bild på er tillsammans där ni håller upp en lapp med texten
+            Night of Passion, eller NoP kort och gott.
+          </p>
+
           <Button color="primary" round onClick={uploadPhoto}>
             <AddAPhoto className={classes.icons} />
           </Button>

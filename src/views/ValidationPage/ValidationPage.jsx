@@ -64,29 +64,12 @@ const ValidationPage = () => {
   const renderValidationForm = () => {
     return (
       <Article title="Verifiering">
-        <p>
-          Nätverket Night of Passion är en exklusiv medlemsklubb. Vi tar emot
-          par som medlemmar som är seriösa och som delar nätverkets värderingar.
-        </p>
         <p className={classes.description}>
-          För att bli medlemmar så krävs det att ni verifierar er som ett par.
-          Det gör ni så här:
+          Det är detta steg som gör att Night of Passion håller en hög nivå på
+          våra medlemmar, där trygga seriösa och sexiga par kan träffas. För att
+          gå med i nätverket så krävs det att ni verifierar er som ett par.
         </p>
 
-        <ul>
-          <li>
-            Skriv någon rad om er själva, ex var ni bor, ålder, hur länge ni
-            varit tillsammans, ev erfarenheter och förväntningar etc. Valfritt
-            är att skicka med andra kontaktuppgifter såsom mobilnummer,
-            facebook, kik, BC etc. Det hindrar er inte från att gå med, men allt
-            sådant bidrar till att stärka er trovärdighet som ett seriöst par
-          </li>
-          <li>
-            Ladda upp en eller flera bilder på er. En av bilderna ska vara en
-            nytagen bild på er tillsammans där ni håller upp en lapp med texten
-            Night of Passion, eller NoP kort och gott.
-          </li>
-        </ul>
         <p className={classes.description}>
           Text och bilder som ni anger här kommer endast att användas för
           verifering. Den sköts av utvalda medlemspar i Night of Passion.
@@ -115,31 +98,37 @@ const ValidationPage = () => {
     return (
       <Article title="Tack för er ansökan!">
         <p className={classes.description}>
-          Vi har mottagit er medlemsansökan med verifiering och vi kommer att
-          granska den och återkommer så snart som möjligt. Detta sker normalt
-          inom någon dag.
+          Vi har nu fått er medlemsansökan med verifiering. Vi kommer att titta
+          på den och återkommer så snart som möjligt. Detta sker normalt inom
+          någon dag.
         </p>
       </Article>
     );
   };
   const renderValidationConfirmed = () => {
     return (
-      <Article title="Medlemsansökan godkänd">
+      <Article title="Välkommen!">
         <p className={classes.description}>
           Vi har godkänt er ansökan och ni är nu ett par i Night of Passion.
-          Välkommen!
         </p>
         <p className={classes.description}>
           Men... Medlemssidan för Night of Passion är under uppbyggnad och vi
           jobbar för fullt med att göra klart siten för era härliga och sexiga
           profiler. Håll tillgodo men framförallt utkik... ses snart ;)
         </p>
+
+        <p className={classes.description}>
+          Under tiden så kommer ni få information och inbjudningar till er
+          epost.
+        </p>
+
+        <p className={classes.description}>Låt det roliga börja!</p>
       </Article>
     );
   };
   const renderValidationIncomplete = () => {
     return (
-      <Article title="Komplettering krävs">
+      <Article title="Åh nej, vi saknar något...">
         <p className={classes.description}>
           Vi har behandlat er medlemsansökan med verifering och vi kan tyvärr
           inte godkänna den så som ni skickade in den. Nedan anger vi orsaken
