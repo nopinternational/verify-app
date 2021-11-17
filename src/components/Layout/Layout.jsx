@@ -77,15 +77,11 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header
-        color="transparent"
+        color="white"
         routes={dashboardRoutes}
         brand="Night of Passion"
         rightLinks={rightLinks(classes)}
         fixed
-        changeColorOnScroll={{
-          height: 80,
-          color: "white",
-        }}
       />
       {children}
       <Footer>hello</Footer>
