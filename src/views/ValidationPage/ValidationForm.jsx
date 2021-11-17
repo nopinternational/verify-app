@@ -92,7 +92,7 @@ const ValidationForm = () => {
 
   const writesignupDataToFirebase = (userid, signupData) => {
     delete signupData["password"];
-
+    delete signupData["username"];
     persistSignupData(userid, signupData);
   };
 

@@ -21,7 +21,7 @@ ReactGA.initialize("UA-134177845-1");
 ReactDOM.render(
   <Router history={hist}>
     <Switch>
-      <PrivateRoute path="/app/validation" component={ValidationPage} />
+      <PrivateRoute path="/validation" component={ValidationPage} />
       <PublicRoute path="/signup" restricted={false} component={SignupPage} />
       <PublicRoute path="/login" restricted={false} component={LoginPage} />
       <PublicRoute path="/" restricted={false} component={LandingPage} />
