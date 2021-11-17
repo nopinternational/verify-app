@@ -48,14 +48,15 @@ const LandingPage = () => {
             </p>
             <p className={classes.description}>
               Nedan kan ni ansöka om att bli medlemmar. För att bli medlemmar så
-              krävs det också att ni verifierar er som ett par. Det sker i nästa
-              steg efter att ni fyllt i nedanstående.
+              krävs det också att ni verifierar er som ett par.
             </p>
+
+            <p className={classes.description}>Låt det roliga börja!</p>
           </Article>
           <Article title="Logga in" cta={ctaLogin}>
             <p className={classes.description}>
-              Är ni redan med eller har påbörjat er ansökan så ska ni logga in
-              istället.
+              Har ni redan påbörjar er ansöka så kan ni istället logga in för
+              att slutföra den.
             </p>
           </Article>
         </div>

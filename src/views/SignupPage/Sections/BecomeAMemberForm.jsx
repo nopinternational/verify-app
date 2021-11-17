@@ -294,7 +294,7 @@ const BecomeAMemberForm = (props) => {
             }}
           />
           <CustomInput
-            labelText="Epost adress"
+            labelText="Epost address"
             id="email"
             helperText={emailErrorState.helperText}
             formControlProps={{

@@ -46,8 +46,8 @@ const SignupPage = () => {
             </p>
             <p className={classes.description}>
               Nedan kan ni ansöka om att bli medlemmar. För att bli medlemmar så
-              krävs det också att ni verifierar er som ett par. Det sker i nästa
-              steg efter att ni fyllt i nedanstående.
+              krävs det också att ni verifierar er som ett par. Låt det roliga
+              börja.
             </p>
             <BecomeAMemberForm />
           </Article>
