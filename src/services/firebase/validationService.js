@@ -38,7 +38,6 @@ export const persistSignupData = (userid, signupData) => {
   //const dataRef = firebase.database().ref(`validation/${userid}`);
   const now = new Date().toISOString();
   //.push(userid + "-hello")
-  console.log("persistSignupData: ", signupData);
   push(validationDataRef, {
     ...signupData,
     created: now,

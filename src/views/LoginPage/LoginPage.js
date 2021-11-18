@@ -62,7 +62,7 @@ export default function LoginPage(/*props*/) {
       loginData.email,
       loginData.password,
       () => {
-        history.push("/app/validation");
+        history.push("/validation");
       },
       (error) => {
         var errorCode = error.code;
