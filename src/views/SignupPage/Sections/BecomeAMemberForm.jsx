@@ -116,6 +116,10 @@ const BecomeAMemberForm = (props) => {
       })
       .catch(function (error) {
         // Handle Errors here.
+        ReactGA.event({
+          category: "Signup",
+          action: "Signup failed",
+        });
         var errorCode = error.code;
         var errorMessage = error.message;
         errorMessage;
@@ -166,7 +170,7 @@ const BecomeAMemberForm = (props) => {
       event.preventDefault();
       ReactGA.event({
         category: "Signup",
-        action: "Signup Clicked",
+        action: "Signup clicked",
       });
     }
     setValidateOnChange(true);

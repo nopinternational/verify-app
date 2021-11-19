@@ -132,14 +132,10 @@ const ValidationForm = () => {
       event.preventDefault();
       ReactGA.event({
         category: "Profile",
-        action: "Validate Clicked",
+        action: "Validate clicked",
       });
       setValidationPending();
       writesignupDataToFirebase(getUser().uid, signupData);
-      ReactGA.event({
-        category: "Signup",
-        action: "Validate Ok",
-      });
     }
   };
 

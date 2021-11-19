@@ -32,6 +32,7 @@ import styles from "assets/jss/material-kit-react/views/loginPage.js";
 
 import image from "assets/img/zero.jpg";
 import { signin } from "services/firebase/auth";
+import ReactGA from "react-ga";
 
 const useStyles = makeStyles(styles);
 
@@ -58,13 +59,25 @@ export default function LoginPage(/*props*/) {
   };
 
   const handleSubmit = () => {
+    ReactGA.event({
+      category: "Login",
+      action: "Login clicked",
+    });
     signin(
       loginData.email,
       loginData.password,
       () => {
+        ReactGA.event({
+          category: "Login",
+          action: "Login success",
+        });
         history.push("/validation");
       },
       (error) => {
+        ReactGA.event({
+          category: "Login",
+          action: "Login failed",
+        });
         var errorCode = error.code;
         var errorMessage = error.message;
         errorMessage;
