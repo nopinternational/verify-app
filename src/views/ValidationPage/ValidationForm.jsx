@@ -226,7 +226,7 @@ const ValidationForm = () => {
           />
 
           <CustomInput
-            labelText="Namn person #1"
+            labelText="Namn på kvinnan"
             id="name1"
             formControlProps={{
               fullWidth: true,
@@ -245,7 +245,7 @@ const ValidationForm = () => {
           />
 
           <CustomInput
-            labelText="Födelseår person #1"
+            labelText="Födelseår på kvinnan"
             id="birthyear1"
             formControlProps={{
               fullWidth: true,
@@ -264,7 +264,7 @@ const ValidationForm = () => {
           />
 
           <CustomInput
-            labelText="Namn person #2"
+            labelText="Namn på mannen"
             id="name2"
             formControlProps={{
               fullWidth: true,
@@ -283,7 +283,7 @@ const ValidationForm = () => {
           />
 
           <CustomInput
-            labelText="Födelseår person #2"
+            labelText="Födelseår på mannnen"
             id="birthyear2"
             formControlProps={{
               fullWidth: true,
