@@ -48,14 +48,11 @@ const Layout = ({ children }) => {
       return (
         <List className={classes.list}>
           <ListItem className={classes.listItem}>
-            <Button
-              disabled
-              className={classes.navLink}
-              onClick={(e) => e.preventDefault()}
-              color="transparent"
-            >
-              {user()}
-            </Button>
+            <Link to={"/validation"} className={classes.link}>
+              <Button href="" className={classes.navLink} color="transparent">
+                {user()}
+              </Button>
+            </Link>
           </ListItem>
           <ListItem className={classes.listItem}>
             <Link to={"/"} className={classes.link}>

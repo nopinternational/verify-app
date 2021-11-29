@@ -104,7 +104,9 @@ const BecomeAMemberForm = (props) => {
         // signInSuccessUrl: '/app/profile',
         userSignedIn(firebase_auth);
         setDisplayName(result.user, signupData.username);
-        setUser(result.user);
+        const localUser = result.user;
+        localUser.displayName = signupData.username;
+        setUser(localUser);
         writesignupDataToFirebase(result.user.uid, signupData);
         ReactGA.event({
           category: "Signup",
