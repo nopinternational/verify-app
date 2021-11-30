@@ -352,6 +352,12 @@ const ValidationForm = () => {
               ),
             }}
           />
+          <p>
+            För att verifiera er så behöver ni bifoga bilder på er själva. Minst
+            en av bilderna ska vara en ansiktsbild med er tillsammans där ni
+            håller i en lapp med texten Night of Passion, eller NoP kort och
+            gott.
+          </p>
           <Button color="primary" round onClick={uploadPhoto}>
             <AddAPhoto className={classes.icons} />
           </Button>
