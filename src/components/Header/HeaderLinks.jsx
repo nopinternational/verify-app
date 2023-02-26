@@ -16,7 +16,7 @@ import { Apps, CloudDownload, AccountCircle } from "@material-ui/icons";
 import CustomDropdown from "components/CustomDropdown/CustomDropdown.jsx";
 import Button from "components/CustomButtons/Button.js";
 
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import headerLinksStyle from "assets/jss/material-kit-react/components/headerLinksStyle.js";
 //import { app as firebase } from "services/firebase.js";
 import { logout, isLoggedIn, getUser } from "services/firebase/auth";

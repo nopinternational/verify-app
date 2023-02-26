@@ -10,13 +10,13 @@ import LoginPage from "views/LoginPage/LoginPage.js";
 import SignupPage from "views/SignupPage/SignupPage";
 import ValidationPage from "views/ValidationPage/ValidationPage";
 import LandingPage from "views/LandingPage/LandingPage.jsx";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import PrivateRoute from "components/Routes/PrivateRoute";
 import PublicRoute from "components/Routes/PublicRoute";
 
 var hist = createBrowserHistory();
 
-ReactGA.initialize("UA-134177845-1");
+ReactGA.initialize("355381351");
 
 ReactDOM.render(
   <Router history={hist}>

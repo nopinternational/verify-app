@@ -32,7 +32,7 @@ import styles from "assets/jss/material-kit-react/views/loginPage.js";
 
 import image from "assets/img/zero.jpg";
 import { signin } from "services/firebase/auth";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 const useStyles = makeStyles(styles);
 

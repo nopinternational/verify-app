@@ -34,7 +34,7 @@ import {
   setDisplayName,
 } from "services/firebase/auth.js";
 
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 const BecomeAMemberForm = (props) => {
   const { classes } = props;

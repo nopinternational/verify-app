@@ -37,7 +37,7 @@ import {
 } from "services/firebase/validationService.js";
 
 //import { trackCustomEvent } from "gatsby-plugin-google-analytics";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import ValidationImage from "./ValidationImage.jsx";
 
 const useStyles = makeStyles(productStyle);

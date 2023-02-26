@@ -12,7 +12,7 @@ import Footer from "components/Footer/Footer.js";
 //import HeaderLinks from "components/Header/HeaderLinks.jsx";
 import Button from "components/CustomButtons/Button.js";
 
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 import PropTypes from "prop-types";
 
