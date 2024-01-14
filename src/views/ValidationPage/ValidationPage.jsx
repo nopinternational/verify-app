@@ -112,9 +112,11 @@ const ValidationPage = () => {
           Vi har godkänt er ansökan och ni är nu ett par i Night of Passion.
         </p>
         <p className={classes.description}>
-          Men... Medlemssidan för Night of Passion är under uppbyggnad och vi
-          jobbar för fullt med att göra klart siten för era härliga och sexiga
-          profiler. Håll tillgodo men framförallt utkik... ses snart ;)
+          Nu kan ni logga in i vår app, ni använder mail och lösen som ni angav
+          här när ni ansökte om medlemskap. Ni hittar appen på{" "}
+          <a href="https://app.nightofpassion.se">
+            https://app.nightofpassion.se
+          </a>
         </p>
 
         <p className={classes.description}>
