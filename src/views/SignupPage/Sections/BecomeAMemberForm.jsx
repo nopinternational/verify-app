@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react";
+import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -151,7 +151,7 @@ const BecomeAMemberForm = (props) => {
     const user = auth.currentUser;
 
     sendEmailVerification(user)
-      .then(function () {})
+      .then(function () { })
       .catch(function (error) {
         console.error("// An error happened: ", error);
       });
