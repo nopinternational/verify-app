@@ -40,6 +40,9 @@
   "optionalDependencies": {
     "typescript": "4.2.4"
   },
+  "overrides": {
+    "graceful-fs": "^4.2.11"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && gulp licenses",

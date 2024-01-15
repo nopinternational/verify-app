@@ -151,7 +151,7 @@ const BecomeAMemberForm = (props) => {
     const user = auth.currentUser;
 
     sendEmailVerification(user)
-      .then(function () { })
+      .then(function () {})
       .catch(function (error) {
         console.error("// An error happened: ", error);
       });
