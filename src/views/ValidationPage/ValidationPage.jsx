@@ -119,11 +119,6 @@ const ValidationPage = () => {
           </a>
         </p>
 
-        <p className={classes.description}>
-          Under tiden så kommer ni få information och inbjudningar till er
-          epost.
-        </p>
-
         <p className={classes.description}>Låt det roliga börja!</p>
       </Article>
     );
