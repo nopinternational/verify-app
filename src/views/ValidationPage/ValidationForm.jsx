@@ -1,5 +1,5 @@
 import React, { createRef, useEffect, useState } from "react";
-import { Link } from "react";
+import { Link } from "react-router-dom";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -28,7 +28,6 @@ import GridItem from "components/Grid/GridItem.js";
 import productStyle from "assets/jss/material-kit-react/views/landingPageSections/productStyle.js";
 
 import { getUser } from "services/firebase/auth";
-//import { getImageUrl } from "services/firebase/image";
 import {
   setValidationPending,
   persistSignupData,
@@ -60,7 +59,7 @@ const ValidationForm = () => {
   });
 
   const [isValidated, setValidated] = useState(false);
-  const [images, setImages] = useState([{ ref: "" }]);
+  const [images, setImages] = useState([]);
   const [showDialog, setShowDialog] = useState(false);
 
   useEffect(() => {
