@@ -71,8 +71,9 @@ const ValidationPage = () => {
         </p>
 
         <p className={classes.description}>
-          Text och bilder som ni anger här kommer endast att användas för
-          verifering. Den sköts av utvalda medlemspar i Night of Passion.
+          Namn och ålder som ni anger här kommer att användas för att skapa er
+          profil i nätverket. Beskrivning och bilder används i
+          verifieringsprocessen för att kunna godkänna er.
         </p>
 
         {renderValidationMessage()}
@@ -99,8 +100,8 @@ const ValidationPage = () => {
       <Article title="Tack för er ansökan!">
         <p className={classes.description}>
           Vi har nu fått er medlemsansökan med verifiering. Vi kommer att titta
-          på den och återkommer så snart som möjligt. Detta sker normalt inom
-          någon dag.
+          på den och återkommer så snart som möjligt. Detta sker normalt inom en
+          dag.
         </p>
       </Article>
     );
@@ -123,6 +124,7 @@ const ValidationPage = () => {
       </Article>
     );
   };
+
   const renderValidationIncomplete = () => {
     return (
       <Article title="Åh nej, vi saknar något...">

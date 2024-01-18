@@ -21,6 +21,7 @@ const typographyStyle = {
     margin: "0 0 20px",
     fontSize: "17.5px",
     borderLeft: "5px solid #eee",
+    whiteSpace: "pre-wrap",
   },
   quoteText: {
     margin: "0 0 10px",
